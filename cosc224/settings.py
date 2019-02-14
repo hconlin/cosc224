@@ -37,10 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'members.apps.MembersConfig',
-<<<<<<< HEAD
     'events.apps.EventsConfig',
-=======
->>>>>>> 448477c4a6e42e8d8e31ab6c2a6c00d73a866483
 ]
 
 MIDDLEWARE = [

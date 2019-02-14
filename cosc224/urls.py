@@ -21,6 +21,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('members/', include('django.contrib.auth.urls')),
     path('members/', include('members.urls')),
+<<<<<<< HEAD
     path('events/', include('events.urls')),
+=======
+>>>>>>> 448477c4a6e42e8d8e31ab6c2a6c00d73a866483
     path('', TemplateView.as_view(template_name='base.html')),
 ]

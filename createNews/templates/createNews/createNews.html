@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+
+		{% block head %}
+		<title> News Creation </title>
+		{% endblock %}
+
+		{% block body %}
+<div class='container'>
+		<h1>Create News</h1>
+		<form method="post">
+			{% csrf_token %}
+			{{ form.as_p }}
+			<button type="submit">Submit</button>
+		</form>
+		<h2> {{ text }} </h2>
+</div>
+		{% endblock %}
+
+		
+

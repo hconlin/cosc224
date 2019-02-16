@@ -1,6 +1,7 @@
-from django.conf.urls import url
-from createNews.views import NewsView
+from django.urls import path
+from . import views
 
 urlpatterns = [
-   url(r'^$', NewsView.as_view() , name = 'createNews')
+    path('create/', views.news_form, name='news'),
+    path('<int:news_id>', views.show, name='show')
 ]

@@ -1,7 +1,6 @@
 from django.db import models
 from members.models import Member
 
-# Create your models here.
 class Event(models.Model):
 	user_id = models.ForeignKey(Member, on_delete=models.CASCADE)
 	title = models.CharField(max_length=200)
@@ -17,3 +16,4 @@ class Event(models.Model):
 	event_coordinator_name = models.CharField(max_length=200)
 	event_coordinator_email = models.EmailField()
 	image_link = models.CharField(max_length=200)
+	REQUIRED_FIELDS = ['title', 'start_date', 'end_date', 'age_requirement']

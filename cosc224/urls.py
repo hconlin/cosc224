@@ -22,7 +22,6 @@ urlpatterns = [
     path('members/', include('django.contrib.auth.urls')),
     path('members/', include('members.urls')),
     path('events/', include('events.urls')),
+    path('news/', include('news.urls')),
     path('', TemplateView.as_view(template_name='base.html')),
-    path('createEvent/', include('createEvent.urls')),
-    path('createNews/', include('createNews.urls')),
 ]

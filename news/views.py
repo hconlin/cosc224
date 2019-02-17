@@ -12,7 +12,7 @@ def news_form(request):
 		form = NewsForm(request.POST)
 		if form.is_valid():
 			cd = form.cleaned_data
-			news = form.save(commit = False)
+			news = form.save(commit=False)
 			news.author_id = request.user
 			news.date = datetime.now()
 			news.save()
@@ -23,4 +23,4 @@ def news_form(request):
 
 def show(request, news_id):
 	news = get_object_or_404(News, pk=news_id)
-	return render(request, 'show.html', {'news': news})
+	return render(request, 'news/show.html', {'news': news})

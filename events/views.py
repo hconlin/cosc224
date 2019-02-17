@@ -11,10 +11,10 @@ def event_form(request):
 		form = EventForm(request.POST)
 		if form.is_valid():
 			cd = form.cleaned_data
-			event = cd.save(commit=False)
+			event = form.save(commit=False)
 			event.user_id = request.user
 			event.save()
-			return HttpResponseRedirect('/')
+			return HttpResponseRedirect('/events/' + str(event.id))
 	else:
 		form = EventForm()
 	return render(request, 'event.html', {'form': form})

@@ -7,6 +7,7 @@ from datetime import datetime
 from news.models import News
 from django.views.generic.edit import UpdateView
 from django.urls import reverse_lazy
+from django.contrib import messages
 
 @staff_member_required
 def news_form(request):
@@ -18,6 +19,7 @@ def news_form(request):
 			news.author_id = request.user
 			news.date = datetime.now()
 			news.save()
+			messages.add_message(request, messages.INFO, 'News successfully created!', extra_tags='alert-success')
 			return HttpResponseRedirect('/news/' + str(news.id))
 	else:
 		form = NewsForm()
@@ -34,10 +36,12 @@ class EditNews(UpdateView):
     template_name_suffix = '_edit_form'
 
     def get_success_url(self):
-        return reverse_lazy('show_news', kwargs={'news_id': self.object.pk})
+    	messages.add_message(self.request, messages.INFO, 'News successfully updated!', extra_tags='alert-success')
+    	return reverse_lazy('show_news', kwargs={'news_id': self.object.pk})
 
 @staff_member_required
 def deleteNews(request, news_id):
     news = get_object_or_404(News, pk=news_id)
     news.delete()
+    messages.add_message(request, messages.INFO, 'News successfully deleted!', extra_tags='alert-success')
     return HttpResponseRedirect('/')

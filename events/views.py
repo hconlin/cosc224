@@ -1,6 +1,7 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from events.forms import EventForm
+from django.utils.decorators import method_decorator
 from django.contrib.admin.views.decorators import staff_member_required
 from events.models import Event
 from django.views.generic.edit import UpdateView
@@ -25,11 +26,17 @@ def show(request, event_id):
 	event = get_object_or_404(Event, pk=event_id)
 	return render(request, 'events/show.html',{'event': event})
 
-@staff_member_required
+@method_decorator(staff_member_required, name='dispatch')
 class EditEvent(UpdateView):
 	model = Event
 	form_class = EventForm
 	template_name_suffix = '_edit_form'
 
 	def get_success_url(self):
-		return reverse_lazy('show', kwargs={'event_id': self.object.pk})
+		return reverse_lazy('show_event', kwargs={'event_id': self.object.pk})
+
+@staff_member_required
+def deleteEvent(request, event_id):
+    event = get_object_or_404(Event, pk=event_id)
+    event.delete()
+    return HttpResponseRedirect('/')

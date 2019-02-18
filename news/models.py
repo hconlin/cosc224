@@ -1,5 +1,6 @@
 from django.db import models
 from members.models import Member
+from django.urls import reverse
 
 class News(models.Model):
 	author_id = models.ForeignKey(Member, on_delete=models.CASCADE)

@@ -4,8 +4,9 @@ from news.forms import NewsForm
 from django.contrib.admin.views.decorators import staff_member_required
 from datetime import datetime
 from news.models import News
+from django.views.generic.edit import UpdateView
+from django.urls import reverse_lazy
 
-# Create your views here.
 @staff_member_required
 def news_form(request):
 	if request.method == 'POST':
@@ -19,8 +20,17 @@ def news_form(request):
 			return HttpResponseRedirect('/news/' + str(news.id))
 	else:
 		form = NewsForm()
-	return render(request, 'news.html', {'form': form})
+	return render(request, 'news/news.html', {'form': form})
 
 def show(request, news_id):
 	news = get_object_or_404(News, pk=news_id)
 	return render(request, 'news/show.html', {'news': news})
+
+@staff_member_required
+class EditNews(UpdateView):
+    model = News
+    form_class = NewsForm
+    template_name_suffix = '_edit_form'
+
+    def get_success_url(self):
+        return reverse_lazy('show', kwargs={'news_id': self.object.pk})

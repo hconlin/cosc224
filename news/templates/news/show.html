@@ -1,6 +1,11 @@
 {% include 'base.html' %}
 
 {% block content %}
-    <h1>{{ news.title }}</h1>
-    <h2>stuff</h2>
+	<img src='{{ news.image_link }}'>
+  <h1>{{ news.title }}</h1>
+  <h2>{{ news.body }}</h2>
+
+  <a href="{% url 'edit_news' news.id %}">edit</a>
+
+  <a href="{% url 'delete_news' news.id %}">delete</a>
 {% endblock %}

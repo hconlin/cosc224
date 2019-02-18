@@ -1,6 +1,7 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from news.forms import NewsForm
+from django.utils.decorators import method_decorator
 from django.contrib.admin.views.decorators import staff_member_required
 from datetime import datetime
 from news.models import News
@@ -26,11 +27,17 @@ def show(request, news_id):
 	news = get_object_or_404(News, pk=news_id)
 	return render(request, 'news/show.html', {'news': news})
 
-@staff_member_required
+@method_decorator(staff_member_required, name='dispatch')
 class EditNews(UpdateView):
     model = News
     form_class = NewsForm
     template_name_suffix = '_edit_form'
 
     def get_success_url(self):
-        return reverse_lazy('show', kwargs={'news_id': self.object.pk})
+        return reverse_lazy('show_news', kwargs={'news_id': self.object.pk})
+
+@staff_member_required
+def deleteNews(request, news_id):
+    news = get_object_or_404(News, pk=news_id)
+    news.delete()
+    return HttpResponseRedirect('/')

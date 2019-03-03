@@ -2,6 +2,11 @@
 
 {% block content %}
   <h1>{{ event.title }}</h1>
+  <p>{{event.location_details}}</p>
+
+  {{% for event in events %}}
+  <p>test</p>
+  {{% endfor %}}
 
   <a href="{% url 'edit_event' event.id %}">edit</a>
 

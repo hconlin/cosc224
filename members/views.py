@@ -27,7 +27,7 @@ def send_auth_email(user_email):
 	email_list = []
 	email_list.append(user_email)
 
-	send_mail('Welcome! Autorization Email',
+	send_mail('Autorization Email',
 	'Welcome to the Okanagan College Computer Scienence Events and News Page',
 	'compscieventsOC@gmail.com',
 	email_list,

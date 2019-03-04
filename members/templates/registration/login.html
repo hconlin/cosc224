@@ -2,7 +2,7 @@
 {% include 'base.html' %}
 <html>
 <head>
-    <link rel="stylesheet" href="{% static 'members/login.css' %}">
+    <link rel="stylesheet" href="{% static 'members/members.css' %}">
 </head>
 <body>
     {% block content %}
@@ -17,7 +17,7 @@
                          <p style="color: red">{{ error }}</p>
                      {% endfor %}
                 {% endfor %}
-            <div class="wrapper"><button type="submit" class="btn-primary" id="login-button">Login</button></div>
+            <div class="wrapper"><button type="submit" class="form-button">Login</button></div>
             </form>
         <div class="wrapper">
             <a class="links" href="/members/register">Don't have an account? Sign up</a><br>

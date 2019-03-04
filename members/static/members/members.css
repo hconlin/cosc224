@@ -18,6 +18,7 @@
     -webkit-border-radius: 15px;
     -moz-border-radius: 15px;
     border-radius: 15px;
+    margin-bottom: 70px;
 }
 
 .img-wrapper{
@@ -31,8 +32,8 @@
 
 .form-input{
     width: 100%;
-    height: 40px;
-    font-size: 20px;
+    height: 2.25em;
+    font-size: 1.25em;
     border:none;
     margin-bottom: 20px;
     padding-left: 10px;
@@ -44,12 +45,24 @@
     transition: background-size 0.3s cubic-bezier(0.64, 0.09, 0.08, 1);
 }
 
+.form-input.half{
+    display: inline;
+    width: 48%;
+}
+
+.form-input.half:nth-child(3){
+    display: inline;
+    width: 48%;
+    float: right;
+}
+
 .wrapper{
     margin-top: 20px;
     text-align: center;
 }
 
-#login-button{
+.form-button{
+    color: white;
     height: 40px;
     width: 150px;
     border:none;
@@ -67,6 +80,28 @@
     display: inline;
     color: #333333;
     font-weight: lighter;
+}
+
+.label{
+    font-size: 1.25em;
+    color: grey;
+    padding-left: 10px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    display: inline;
+}
+
+.date-input {
+    margin-right: -1px;
+    border: 1px solid #d3d3d3;
+   	font-size: 1em;
+   	color: #59595A;
+   	height: 2.1em;
+   	width: 7.5em;
+  	padding-left: 10px;
+    -moz-appearance: none;
+    margin-bottom: 20px;
+    margin-top: 20px;
 }
 
 .links{

@@ -9,7 +9,7 @@ class SignUpForm(UserCreationForm):
 	email = forms.EmailField(label='Email', max_length=200, required=True,
 							 widget=forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'Email'}))
 	first_name = forms.CharField(label='First Name', max_length=100, required=True,
-								 widget=forms.TextInput(attrs={'class': 'form-input half', 'placeholder': 'First name'}))
+								 widget=forms.TextInput(attrs={'autofocus':'autofocus','class': 'form-input half', 'placeholder': 'First name'}))
 	last_name = forms.CharField(label='Last Name', max_length=100, required=True,
 								widget=forms.TextInput(attrs={'class': 'form-input half', 'placeholder': 'Last name'}))
 	date_of_birth = forms.DateField(label='Date of Birth', widget=forms.SelectDateWidget(attrs={'class': 'date-input'}), required=True)
@@ -21,5 +21,5 @@ class SignUpForm(UserCreationForm):
 		fields = ('first_name', 'last_name','email', 'password1', 'password2', 'date_of_birth')
 
 class LoginForm(AuthenticationForm):
-	username = forms.EmailField(widget=forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'Email'}))
+	username = forms.EmailField(widget=forms.TextInput(attrs={'autofocus':'autofocus','class': 'form-input', 'placeholder': 'Email'}))
 	password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-input', 'placeholder': 'Password'}))

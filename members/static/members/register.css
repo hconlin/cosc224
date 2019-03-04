@@ -1,0 +1,119 @@
+.header{
+    text-align: center;
+    font-size: 40px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333333;
+}
+
+.member-form{
+    width: 700px;
+    padding-right: 50px;
+    padding-left: 50px;
+    padding-bottom: 50px;
+    background-color: white;
+    border: solid 1px #dfe0e1;
+    margin: auto;
+    margin-top: 100px;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+}
+
+.img-wrapper{
+    text-align: center;
+}
+
+.form-logo{
+    position: relative;
+    top: -40px;
+}
+
+.form-input{
+    width: 100%;
+    height: 50px;
+    font-size: 20px;
+    border:none;
+    margin-bottom: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+    background: white no-repeat;
+    background-image: linear-gradient(to bottom, #d41f55, #d41f55), linear-gradient(to bottom, silver, silver);
+    background-size: 0 2px, 100% 1px;
+    background-position: 50% 100%, 50% 100%;
+    transition: background-size 0.3s cubic-bezier(0.64, 0.09, 0.08, 1);
+}
+
+.form-input.half{
+    display: inline;
+    width: 48%;
+}
+
+.form-input.half:nth-child(3){
+    display: inline;
+    width: 48%;
+    float: right;
+}
+
+.wrapper{
+    margin-top: 20px;
+    text-align: center;
+}
+
+#login{
+    height: 40px;
+    width: 150px;
+    border:none;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    background-color: #d41f55;
+}
+
+input[type=checkbox]{
+    margin-right: 5px;
+    height: 16px;
+    width: 16px;
+    display: inline;
+}
+
+.text{
+    position: relative;
+    top: -3px;
+    font-size: 16px;
+    display: inline;
+    color: #333333;
+    font-weight: lighter;
+}
+
+.label{
+    font-size: 20px;
+    color: grey;
+    padding-left: 10px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    display: inline;
+}
+
+.date-input {
+    margin-right: -1px;
+    border: 1px solid #d3d3d3;
+   	font-size: 16px;
+   	color: #59595A;
+   	height: 50px;
+   	width: 120px;
+  	padding-left: 10px;
+    -moz-appearance: none;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+.links{
+    margin: auto;
+    font-weight: lighter;
+}
+
+input:focus{
+  background-size: 100% 2px, 100% 1px;
+  outline: none;
+}

@@ -1,9 +1,29 @@
-{% block content %}
-<h1>Login</h1>
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <input type="checkbox" name="remember_me" value="true">Remember Me</input>
-  <button type="submit">Login</button>
-</form>
-{% endblock %}
+{% load static %}
+{% include 'base.html' %}
+<html>
+<head>
+    <link rel="stylesheet" href="{% static 'members/login.css' %}">
+</head>
+<body>
+    {% block content %}
+        <div class="member-form">
+        <div class="img-wrapper"><img class='form-logo' src="{% static 'images/logo.gif' %}" height="80px" width="80px"></div>
+        <div class="header">Sign in to Cosc Events</div>
+            <form method="post">
+                {% csrf_token %}
+                {% for field in form %}
+                    {{ field }}
+                     {% for error in field.errors %}
+                         <p style="color: red">{{ error }}</p>
+                     {% endfor %}
+                {% endfor %}
+            <div class="wrapper"><button type="submit" class="btn-primary" id="login">Login</button></div>
+            </form>
+        <div class="wrapper">
+            <a class="links" href="/members/register">Don't have an account? Sign up</a><br>
+            <a class="links" href="/members/password/recover">Forgot password</a>
+        </div>
+        </div>
+    {% endblock %}
+</body>
+</html>

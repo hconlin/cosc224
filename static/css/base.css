@@ -1,0 +1,9 @@
+html, body{
+    background-color: #f8f9fa;
+}
+
+.navbar {
+    height: 77px;
+    background-color: white !important;
+    border-bottom: solid 1px #dfe0e1;
+}

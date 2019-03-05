@@ -1,18 +1,32 @@
+{% load static %}
 {% include 'base.html' %}
-
-{% block content %}
-  <h2>Sign up</h2>
-  <form method="post">
-    {% csrf_token %}
-   	{% for field in form %}
-      <p>
-        {{ field.label_tag }}<br>
-        {{ field }}
-      </p>
-      {% for error in field.errors %}
-          <p style="color: red">{{ error }}</p>
-        {% endfor %}
-    {% endfor %}
-    <button type="submit">Sign up</button>
-  </form>
-{% endblock %}
+<html>
+<head>
+    <link rel="stylesheet" href="{% static 'members/members.css' %}">
+</head>
+<body>
+    {% block content %}
+        <div class="member-form">
+        <div class="img-wrapper"><img class='form-logo' src="{% static 'images/logo.gif' %}" height="80px" width="80px"></div>
+        <div class="header">Sign up for Cosc Events</div>
+            <form method="post">
+                {% csrf_token %}
+                {% for field in form %}
+                    {% if field.name == 'date_of_birth' %}
+                        <div class="date-wrapper"><div class="label">Date of Birth</div>{{ field }}</div>
+                    {% else %}
+                        {{ field }}
+                    {%  endif %}
+                    {% for error in field.errors %}
+                        <p style="color: red">{{ error }}</p>
+                    {% endfor %}
+                {% endfor %}
+                <div class="wrapper"><button type="submit" class="form-button">Sign up</button></div>
+            </form>
+        <div class="wrapper">
+            <a class="links" href="/members/login">Already have an account? Log in</a><br>
+        </div>
+        </div>
+    {% endblock %}
+</body>
+</html>

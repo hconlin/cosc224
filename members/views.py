@@ -2,6 +2,7 @@ from django.contrib.auth import login, authenticate
 from django.shortcuts import render, redirect
 from django.core.mail import send_mail
 from .forms import SignUpForm
+from .forms import SignUpForm, LoginForm
 
 def signup(request):
 	if request.method == 'POST':
@@ -32,3 +33,4 @@ def send_auth_email(user_email):
 	'compscieventsOC@gmail.com',
 	email_list,
 	fail_silently = False,)
+

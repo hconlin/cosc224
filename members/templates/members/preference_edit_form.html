@@ -1,0 +1,41 @@
+{% include 'base.html' %}
+{% load static %}
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'members/preferences.css' %}">
+</head>
+<body>
+{% block content %}
+    <div class="preference-form">
+    <div class="header">Edit Preferences</div>
+      <form action="" method="post">
+        {% csrf_token %}
+        {% for field in form %}
+            {{ field }}
+          {% for error in field.errors %}
+              <p style="color: red">{{ error }}</p>
+            {% endfor %}
+        {% endfor %}
+      <div class="button-wrapper">
+        <input type="submit" value="Update Preferences", class="form-button">
+      </div>
+      </form>
+    </div>
+{% endblock %}
+
+<script>
+    $(document).ready(function(){
+        var preferenceArray;
+        preferenceArray = {{ preference|safe }};
+        for(i = 0; i < preferenceArray.length; i++) {
+            $('input[type=checkbox]').each(function (){
+                if($(this).val() == preferenceArray[i]){
+                    $(this).prop('checked', true);
+                }
+            });
+        }
+    });
+</script>
+</body>
+
+</html>

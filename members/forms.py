@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
+from members.models import Preference, Member
 
 User = get_user_model()
 
@@ -23,3 +24,14 @@ class SignUpForm(UserCreationForm):
 class LoginForm(AuthenticationForm):
 	username = forms.EmailField(widget=forms.TextInput(attrs={'autofocus':'autofocus','class': 'form-input', 'placeholder': 'Email'}))
 	password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-input', 'placeholder': 'Password'}))
+
+
+class PreferenceForm(forms.ModelForm):
+	PREFERENCES = (('game competitions', 'Game Competitions'),('software competitions', 'Software Competitions'),('meet and greets', 'Meet & Greets'),('seminars', 'Seminars'),
+					('social networking','Social Networking'), ('job fairs', 'Job Fairs'))
+	preferences = forms.MultipleChoiceField(choices=PREFERENCES, widget=forms.CheckboxSelectMultiple(attrs={'class':'checkmark'}))
+
+	class Meta:
+		model = Preference
+		fields = ('preferences',)
+

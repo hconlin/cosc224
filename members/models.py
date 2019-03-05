@@ -38,3 +38,12 @@ class Member(AbstractUser):
 	USERNAME_FIELD = 'email'
 	REQUIRED_FIELDS = ['date_of_birth', 'first_name', 'last_name']
 	objects = MemberManager()
+
+class Preference(models.Model):
+	user = models.ForeignKey(Member, on_delete=models.CASCADE)
+	preferences = models.CharField(max_length=500)
+	REQUIRED_FIELDS = ['preferences']
+
+	def __str__(self):
+		return u"%s" % (self.preferences)
+		#query values in a list = MODEL_NAME.objects.filter(FIELD_NAME__contains=VALUE)

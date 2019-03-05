@@ -3,7 +3,7 @@
 {% block content %}
   <h1>{{ event.title }}</h1>
 
-  <a href="{% url 'edit_event' event.id %}">edit</a>
+  <a href="{% url 'edit_event' event.id %}">Edit Preferences</a>
 
   <a href="{% url 'delete_event' event.id %}">delete</a>
 {% endblock %}

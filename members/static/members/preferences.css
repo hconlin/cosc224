@@ -1,0 +1,62 @@
+.header{
+    text-align: center;
+    font-size: 2.5em;
+    font-weight: bold;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    color: #333333;
+}
+
+.preference-form{
+    width: 43.750em;
+    padding-right: 50px;
+    padding-left: 50px;
+    background-color: white;
+    border: solid 1px #dfe0e1;
+    margin: auto;
+    margin-top: 6.25em;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+    margin-bottom: 70px;
+}
+
+.checkmark{
+    font-size: 20px;
+}
+
+.checkmark{
+    list-style: none;
+    padding:0;
+}
+
+.checkmark label{
+    width: 100%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
+    margin-bottom: 0;
+}
+
+.checkmark li:hover, label:hover{
+    cursor: pointer;
+    background-color: #efefef;
+}
+
+.button-wrapper{
+    text-align: center;
+}
+
+.form-button{
+    color: white;
+    height: 40px;
+    width: 150px;
+    border:none;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    background-color: #d41f55;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}

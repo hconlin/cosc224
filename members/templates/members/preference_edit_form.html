@@ -3,6 +3,7 @@
 <html>
 <head>
     <link rel="stylesheet" type="text/css" href="{% static 'members/preferences.css' %}">
+    <script src="{% static 'js/members.js' %}"></script>   
 </head>
 <body>
 {% block content %}
@@ -24,17 +25,7 @@
 {% endblock %}
 
 <script>
-    $(document).ready(function(){
-        var preferenceArray;
-        preferenceArray = {{ preference|safe }};
-        for(i = 0; i < preferenceArray.length; i++) {
-            $('input[type=checkbox]').each(function (){
-                if($(this).val() == preferenceArray[i]){
-                    $(this).prop('checked', true);
-                }
-            });
-        }
-    });
+   getPreferences({{ preference|safe }})
 </script>
 </body>
 

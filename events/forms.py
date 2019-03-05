@@ -3,9 +3,9 @@ from events.models import Event
 
 class EventForm(forms.ModelForm):
 
-	EVENT_TYPE = [('game competition', 'Game Competition'),('software competition', 'Software Competition'),
-	('meet and greet', 'Meet & Greet'),('seminar', 'Seminar'),
-	('social networking','Social Networking'), ('job fair', 'Job Fair')]
+	EVENT_TYPE = [('game competitions', 'Game Competition'),('software competitions', 'Software Competition'),
+	('meet and greets', 'Meet & Greet'),('seminars', 'Seminar'),
+	('social networking','Social Networking'), ('job fairs', 'Job Fair')]
 
 	title = forms.CharField(label='Title')
 	start_time = forms.TimeField(widget=forms.TimeInput(format='%H:%M'), required=False)

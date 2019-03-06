@@ -2,6 +2,7 @@
 
 {% block content %}
   <h1>{{ event.title }}</h1>
+  <p>{{event.location_details}}</p>
 
   <a href="{% url 'edit_event' event.id %}">Edit Preferences</a>
 

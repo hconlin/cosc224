@@ -16,4 +16,4 @@ class Event(models.Model):
 	event_coordinator_name = models.CharField(max_length=200)
 	event_coordinator_email = models.EmailField()
 	image_link = models.CharField(max_length=200)
-	REQUIRED_FIELDS = ['title', 'start_date', 'end_date', 'age_requirement']
+	REQUIRED_FIELDS = ['title', 'start_date', 'end_date', 'age_requirement', 'category']

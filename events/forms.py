@@ -2,6 +2,11 @@ from django import forms
 from events.models import Event
 
 class EventForm(forms.ModelForm):
+
+	EVENT_TYPE = [('game competitions', 'Game Competition'),('software competitions', 'Software Competition'),
+	('meet and greets', 'Meet & Greet'),('seminars', 'Seminar'),
+	('social networking','Social Networking'), ('job fairs', 'Job Fair')]
+
 	title = forms.CharField(label='Title')
 	start_time = forms.TimeField(widget=forms.TimeInput(format='%H:%M'), required=False)
 	start_date = forms.DateField(label='Start Date', widget=forms.SelectDateWidget)
@@ -11,7 +16,8 @@ class EventForm(forms.ModelForm):
 	cost = forms.DecimalField(label='Cost')
 	age_requirement = forms.IntegerField(label='Age Requirement')
 	link = forms.URLField(label='Event Link')
-	category = forms.CharField(label='Category')
+	# category = forms.CharField(label='Category')
+	category = forms.CharField(label='What type of competition?', widget=forms.Select(choices=EVENT_TYPE))
 	event_coordinator_name = forms.CharField(label='Contact Name')
 	event_coordinator_email = forms.EmailField(label='Contact Email')
 	image_link = forms.URLField(label='Image Link')

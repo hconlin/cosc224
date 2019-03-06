@@ -132,3 +132,10 @@ AUTH_USER_MODEL = 'members.Member'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/members/login'
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = '587'
+EMAIL_HOST_USER = 'CompSciEventsOC@gmail.com'
+EMAIL_HOST_PASSWORD = 'AhPES324'
+EMAIL_USE_TLS = True

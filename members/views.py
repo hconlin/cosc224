@@ -34,7 +34,7 @@ def signup(request):
 			message = render_to_string('email/acc_active_email.html', {
 				'user': user,
 				'domain': current_site.domain,
-				'uid':urlsafe_base64_encode(force_bytes(user.pk)).decode(),
+				'uid':urlsafe_base64_encode(force_bytes(user.id)).decode(),
 				'token':account_activation_token.make_token(user),
 			})
 			to_email = form.cleaned_data.get('email')
@@ -89,31 +89,19 @@ def profile(request, user_id):
 	member = get_object_or_404(Member, pk=user_id)
 	return render(request, 'members/profile.html',{'member': member})
 
-
-
 def activate(request, uidb64, token):
-    try:
-        uid = force_text(urlsafe_base64_decode(uidb64))
-        user = User.objects.get(pk=uid)
-    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
-        user = None
-    if user is not None and account_activation_token.check_token(user, token):
-        user.email_activated = True
-        user.save()
-        login(request, user)
-        # return redirect('home')
-        return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
-    else:
-        return HttpResponse('Activation link is invalid!')
+	try:
+		uid = force_text(urlsafe_base64_decode(uidb64))
+		user = Member.objects.get(pk=uid)
+	except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+		user = None
+	if user is not None and account_activation_token.check_token(user, token):
+		user.email_activated = True
+		user.save()
+		login(request, user)
+		return render(request, 'email/confirmation.html',{'answer': 'Your Registration is Complete! Thanks.'})
+	else:
+		return render(request, 'email/confirmation.html',{'answer': 'Invalid link, please resend email INSERT BUTTON'})
 
 
-# def send_auth_email(user_email):
-#         email_list = []
-#         email_list.append(user_email)
-
-#         send_mail('Autorization Email',
-#         'Welcome to the Okanagan College Computer Scienence Events and News Page',
-#         'compscieventsOC@gmail.com',
-#         email_list,
-#         fail_silently = False,)
 

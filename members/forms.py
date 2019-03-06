@@ -26,6 +26,7 @@ class LoginForm(AuthenticationForm):
 	password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-input', 'placeholder': 'Password'}))
 
 
+
 class PreferenceForm(forms.ModelForm):
 	PREFERENCES = (('game competitions', 'Game Competitions'),('software competitions', 'Software Competitions'),('meet and greets', 'Meet & Greets'),('seminars', 'Seminars'),
 					('social networking','Social Networking'), ('job fairs', 'Job Fairs'))
@@ -34,4 +35,3 @@ class PreferenceForm(forms.ModelForm):
 	class Meta:
 		model = Preference
 		fields = ('preferences',)
-

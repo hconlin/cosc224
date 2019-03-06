@@ -17,6 +17,7 @@ from django.utils.encoding import force_bytes, force_text
 from .tokens import account_activation_token
 from django.contrib.auth.models import User
 from django.template.loader import render_to_string
+from django.contrib import auth
 
 def signup(request):
 	if request.method == 'POST':
@@ -50,6 +51,7 @@ def signup(request):
 	return render(request, 'register.html', {'form': form})
 
 def login_user(request, template_name='registration/login.html', extra_context=None):
+	#print(request)
 	response = auth_views.login(request, template_name)
 	if request.POST.has_key('remember_me'):
 		request.session.set_expiry(60 * 60 * 24 * 365)
@@ -104,4 +106,26 @@ def activate(request, uidb64, token):
 		return render(request, 'email/confirmation.html',{'answer': 'Invalid link, please resend email INSERT BUTTON'})
 
 
+
+
+def auth_view(request):
+
+    # here you get the post request username and password
+    username = request.POST.get('username', '')
+    password = request.POST.get('password', '')
+    print(password)
+    # authentication of the user, to check if it's active or None
+    user = auth.authenticate(username=username, password=password)
+
+    if user is not None:
+        if user.is_active:
+            # this is where the user login actually happens, before this the user
+            # is not logged in.
+            auth.login(request, user)
+
+            ...
+            return ...
+
+    else :
+        return HttpResponseRedirect("Invalid username or password")
 

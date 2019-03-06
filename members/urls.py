@@ -12,4 +12,6 @@ urlpatterns = [
     path('<int:user_id>/profile', views.profile, name='member_profile'),
     re_path(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
         views.activate, name='activate'),
+    re_path(r'^accounts/auth/$', 'auth_view'),
+
 ]

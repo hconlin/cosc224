@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+
+		
+				
+	
+			
+<br />
+<!-- Iterates through the events -->
+{% for event in events %}
+	
+	
+		
+		<!-- Below should probably be an unordered list instead -->
+
+		<h2>Title: <b>{{ event.title }}</b></h2><br/><br />
+		<p><b>Start Time: </b>{{ event.start_time }}</p>
+		<p><b>Start Date: </b>{{ event.start_date }}</p>
+		<p><b>End Date: </b>{{ event.end_date }}</p>
+		<p><b>Location: </b>{{ event.location }}</p>
+		<p><b>Location Details: </b>{{ event.location_details }}</p>
+		<p><b>Cost:</b> {{ event.cost }}</p>
+		<p><b>Age Requirement: </b>{{ event.age_requirement }}</p>
+		<p><b>Event Page Link:</b> <a href="{{ event.link }}" target="_blank"> {{ event.link }}</a></p>
+		<p><b>Categories:</b> {{ event.category }}</p>
+		<p><b>Contact Name:</b> {{ event.event_coordinator_name }}</p>
+		<p><b>Contact Email:</b> {{ event.event_coordinator_email }}</p>
+		<p><b>Image: </b> <img src="{{ event.image_link }}" alt="Event Image" height="250" width="250"></p>
+		
+		<br />
+		<br />
+		<br />
+
+
+{% endfor %}
+
+<div class="container text-center">    
+  <h3>What We Do</h3><br>
+  <div class="row">
+    <div class="col-sm-4">
+      <img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image">
+      <p>Current Project</p>
+    </div>
+    <div class="col-sm-4"> 
+      <img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image">
+      <p>Project 2</p>    
+    </div>
+    <div class="col-sm-4">
+      <div class="well">
+       <p>Some text..</p>
+      </div>
+      <div class="well">
+       <p>Some text..</p>
+      </div>
+    </div>
+  </div>
+</div><br>
+
+
+{% endblock content %}
+
+
+		
+					
+				
+		

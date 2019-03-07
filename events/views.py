@@ -44,3 +44,18 @@ def deleteEvent(request, event_id):
     event.delete()
     messages.add_message(request, messages.INFO, 'Event successfully deleted!', extra_tags='alert-success')
     return HttpResponseRedirect('/')
+
+def home(request):
+	#currently iterates through all events. 
+	context = {
+		'events': Event.objects.all()[:1]
+	}
+	return render(request, 'events/home.html', context)
+
+
+def events(request):
+	#currently iterates through all events. 
+	context = {
+		'events': Event.objects.all()
+	}
+	return render(request, 'events/events.html', context)

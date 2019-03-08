@@ -18,18 +18,22 @@ from .tokens import account_activation_token
 from django.contrib.auth.models import User
 from django.template.loader import render_to_string
 from django.contrib import auth
+import string
+import random
+N = 32
 
 def signup(request):
 	if request.method == 'POST':
 		form = SignUpForm(request.POST)
 		if form.is_valid():
-			user = form.save()
+			user = form.save(commit=False)
+			user_salt = gimme_salt()
+			user.user_salt = user_salt
+			user.save()
 			email = form.cleaned_data.get('email')
 			raw_password = form.cleaned_data.get('password1')
 			member = authenticate(email=email, password=raw_password)
 			login(request, member)
-
-
 			current_site = get_current_site(request)
 			mail_subject = 'Activate your account.'
 			message = render_to_string('email/acc_active_email.html', {
@@ -49,12 +53,6 @@ def signup(request):
 	else:
 		form = SignUpForm()
 	return render(request, 'register.html', {'form': form})
-
-def login_user(request, template_name='registration/login.html', extra_context=None):
-	#print(request)
-	response = auth_views.login(request, template_name)
-	if request.POST.has_key('remember_me'):
-		request.session.set_expiry(60 * 60 * 24 * 365)
 
 @login_required
 def preference_selection(request):
@@ -105,9 +103,6 @@ def activate(request, uidb64, token):
 	else:
 		return render(request, 'email/confirmation.html',{'answer': 'Invalid link, please resend email INSERT BUTTON'})
 
-
-
-
 def auth_view(request):
 
     username = request.POST.get('username', '')
@@ -121,4 +116,7 @@ def auth_view(request):
             return redirect('/')
     else :
         return HttpResponseRedirect("Invalid username or password")
+
+def gimme_salt():
+	return ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(N))
 

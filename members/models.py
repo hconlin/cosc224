@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 import string
 import random
+N = 32
 
 class MemberManager(BaseUserManager):
 
@@ -10,6 +11,7 @@ class MemberManager(BaseUserManager):
 	def _create_user(self, email, password, **extra_fields):
 		if not email:
 			raise ValueError("Email can't be blank.")
+		# user_salt = gimme_salt()
 		email = self.normalize_email(email)
 		user = self.model(email=email, **extra_fields)
 		user.set_password(password)
@@ -38,7 +40,7 @@ class Member(AbstractUser):
 	last_name = models.CharField(max_length=200)
 	date_of_birth = models.DateField()
 	email_activated = models.BooleanField(default=False)
-	# user_salt = models.CharField(max_length = 32)
+	user_salt = models.CharField(max_length = 32, default=0)
 	USERNAME_FIELD = 'email'
 	REQUIRED_FIELDS = ['date_of_birth', 'first_name', 'last_name']
 	objects = MemberManager()
@@ -50,5 +52,7 @@ class Preference(models.Model):
 
 	def __str__(self):
 		return u"%s" % (self.preferences)
-		#query values in a list = MODEL_NAME.objects.filter(FIELD_NAME__contains=VALUE)
+		
 
+def gimme_salt():
+	return ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(N))

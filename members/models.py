@@ -42,7 +42,7 @@ class Member(AbstractUser):
 	objects = MemberManager()
 
 	def __str__(self):
-		return u"%s %s" % (self.email, self.user_salt)
+		return u"%s %s %s" % (self.email, self.user_salt, self.email_activated)
 
 class Preference(models.Model):
 	user = models.ForeignKey(Member, on_delete=models.CASCADE)

@@ -23,7 +23,7 @@
                     <a class="nav-link" href="/">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/events/show/1">Events</a>
+                    <a class="nav-link" href="/events/">Events</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/news/">News</a>
@@ -45,17 +45,17 @@
                     </li>
                 {% endif %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'member_profile' user.id %}">Edit Profile</a>
+                    <a class="nav-link" href="{% url 'member_profile' %}">Edit Profile</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'logout' %}">Logout</a>
                 </li>
             {% else %}
                 <li class="nav-item">
-                    <a class="nav-link" href="/members/login">Login</a>
+                    <a class="nav-link" href="{% url 'login' %}">Login</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/members/register">Sign up</a>
+                    <a class="nav-link" href="{% url 'signup' %}">Sign up</a>
                 </li>
             {% endif %}
         </ul>

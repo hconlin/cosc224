@@ -18,41 +18,52 @@ from .tokens import account_activation_token
 from django.contrib.auth.models import User
 from django.template.loader import render_to_string
 from django.contrib import auth
+from django.db import connection
+from threading import Thread
 import string
 import random
 N = 32
+
+def start_new_thread(function):
+    def decorator(*args, **kwargs):
+        t = Thread(target = function, args=args, kwargs=kwargs)
+        t.daemon = True
+        t.start()
+    return decorator
 
 def signup(request):
 	if request.method == 'POST':
 		form = SignUpForm(request.POST)
 		if form.is_valid():
-			user = form.save(commit=False)
-			user_salt = gimme_salt()
-			user.user_salt = user_salt
-			user.save()
+			form.save()
 			email = form.cleaned_data.get('email')
 			raw_password = form.cleaned_data.get('password1')
 			member = authenticate(email=email, password=raw_password)
 			login(request, member)
 			current_site = get_current_site(request)
-			mail_subject = 'Activate your account.'
-			message = render_to_string('email/acc_active_email.html', {
-				'user': user,
-				'domain': current_site.domain,
-				'uid':urlsafe_base64_encode(force_bytes(user.id)).decode(),
-				'token':account_activation_token.make_token(user),
-			})
-			to_email = form.cleaned_data.get('email')
-			email = EmailMessage(
-				mail_subject, message, to=[to_email]
-			)
-			email.send()
-
-
+			current_site = current_site.domain
+			send_verification_email(member.id, current_site)
 			return redirect('/members/preferences/')
 	else:
 		form = SignUpForm()
 	return render(request, 'register.html', {'form': form})
+
+@start_new_thread
+def send_verification_email(user_id, current_site_domain):
+	user = Member.objects.get(pk=user_id)
+	email_address = user.email
+	mail_subject = 'Activate your account.'
+	message = render_to_string('email/acc_active_email.html', {
+		'user': user,
+		'domain': current_site_domain,
+		'uid': urlsafe_base64_encode(force_bytes(user_id)).decode(),
+		'token': account_activation_token.make_token(user),
+	})
+	email = EmailMessage(
+		mail_subject, message, to=[email_address]
+	)
+	email.send()
+	connection.close()
 
 @login_required
 def preference_selection(request):
@@ -82,11 +93,11 @@ class EditPreferences(UpdateView):
 
 	def get_success_url(self):
 		messages.add_message(self.request, messages.INFO, 'Successfully updated your preferences!', extra_tags='alert-success')
-		return reverse_lazy('member_profile', kwargs={'user_id': self.request.user.id})
+		return reverse_lazy('member_profile')
 
 @login_required
-def profile(request, user_id):
-	member = get_object_or_404(Member, pk=user_id)
+def profile(request):
+	member = get_object_or_404(Member, pk=request.user.id)
 	return render(request, 'members/profile.html',{'member': member})
 
 def activate(request, uidb64, token):
@@ -119,4 +130,3 @@ def auth_view(request):
 
 def gimme_salt():
 	return ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(N))
-

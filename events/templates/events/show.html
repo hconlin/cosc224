@@ -1,8 +1,31 @@
-{% include 'base.html' %}
+{% extends 'base.html' %}
+
+
+		{% block head %}
+		<title> {{ event.title }} </title>
+		{% endblock %}
 
 {% block content %}
+
+
   <h1>{{ event.title }}</h1>
-  <p>{{event.location_details}}</p>
+  <h2>Title: <b>{{ event.title }}</b></h2>
+  <p><b>Start Time: </b>{{ event.start_time }}</p>
+  <p><b>Start Date: </b>{{ event.start_date }}</p>
+  <p><b>End Date: </b>{{ event.end_date }}</p>
+  <p><b>Location: </b>{{ event.location }}</p>
+  <p><b>Location Details: </b>{{ event.location_details }}</p>
+  <p><b>Cost:</b> {{ event.cost }}</p>
+  <p><b>Age Requirement: </b>{{ event.age_requirement }}</p>
+  <p><b>Event Page Link:</b> <a href="{{ event.link }}" target="_blank"> {{ event.link }}</a></p>
+  <p><b>Categories:</b> {{ event.category }}</p>
+  <p><b>Contact Name:</b> {{ event.event_coordinator_name }}</p>
+  <p><b>Contact Email:</b> {{ event.event_coordinator_email }}</p>
+  <p><b>Image: </b> <img src="{{ event.image_link }}" alt="Event Image" height="250" width="250"></p>
+		
+		<br />
+		<br />
+		<br />
 
   <a href="{% url 'edit_event' event.id %}">Edit Preferences</a>
 

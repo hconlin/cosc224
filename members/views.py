@@ -42,7 +42,7 @@ def signup(request):
 
 			current_site = current_site.domain
 			send_verification_email(member.id, current_site)
-			return redirect('/members/preferences/')
+			return redirect('/preferences/')
 	else:
 		form = SignUpForm()
 	return render(request, 'register.html', {'form': form})

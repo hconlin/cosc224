@@ -9,3 +9,11 @@ html, body{
     background-color: white !important;
     border-bottom: solid 1px #dfe0e1;
 }
+
+.alert{
+    position: absolute;
+    left:50%;
+    margin-left: -350px;
+    top: 100px;
+    width: 700px;
+}

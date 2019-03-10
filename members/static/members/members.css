@@ -113,3 +113,9 @@ input:focus{
   background-size: 100% 2px, 100% 1px;
   outline: none;
 }
+
+.alert-danger{
+    height: 50px;
+    line-height: 50px;
+    padding-left: 20px;
+}

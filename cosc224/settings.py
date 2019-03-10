@@ -116,6 +116,7 @@ USE_L10N = True
 
 USE_TZ = True
 
+# APPEND_SLASH = False
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
@@ -131,7 +132,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 AUTH_USER_MODEL = 'members.Member'
 
 LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = '/members/login'
+LOGOUT_REDIRECT_URL = '/login'
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 
 

@@ -21,6 +21,48 @@
     margin-bottom: 70px;
 }
 
+.form-input{
+    width: 100%;
+    height: 2.25em;
+    font-size: 1.25em;
+    border: solid 1px silver;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.text{
+    position: relative;
+    top: -3px;
+    font-size: 16px;
+    display: inline;
+    color: #333333;
+    font-weight: lighter;
+}
+
+.label{
+    font-size: 1.25em;
+    color: grey;
+    padding-left: 10px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    display: inline;
+}
+
+.date-input {
+    margin-right: -1px;
+    border: 1px solid #d3d3d3;
+   	font-size: 1em;
+   	color: #59595A;
+   	height: 2.1em;
+   	width: 7.5em;
+  	padding-left: 10px;
+    -moz-appearance: none;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
 .checkmark{
     font-size: 20px;
 }

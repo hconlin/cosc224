@@ -1,7 +1,7 @@
 from django.contrib.auth import login, authenticate
 from django.core.mail import EmailMessage
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import SignUpForm, LoginForm
+from .forms import SignUpForm, LoginForm, ProfileForm
 from django.contrib.auth.decorators import login_required
 from members.models import Preference, Member
 from django.views.generic.edit import UpdateView
@@ -20,7 +20,34 @@ from django.contrib import auth
 from background_task import background
 import json
 
-@background(schedule=5)
+def start_new_thread(function):
+    def decorator(*args, **kwargs):
+        t = Thread(target = function, args=args, kwargs=kwargs)
+        t.daemon = True
+        t.start()
+    return decorator
+
+def signup(request):
+	if request.method == 'POST':
+		form = SignUpForm(request.POST)
+		if form.is_valid():
+			form.save()
+			email = form.cleaned_data.get('email')
+			raw_password = form.cleaned_data.get('password1')
+			member = authenticate(email=email, password=raw_password)
+			login(request, member)
+			current_site = get_current_site(request)
+
+			send_verification_email(member.id, current_site.domain)
+
+			current_site = current_site.domain
+			send_verification_email(member.id, current_site)
+			return redirect('/members/preferences/')
+	else:
+		form = SignUpForm()
+	return render(request, 'register.html', {'form': form})
+
+@start_new_thread
 def send_verification_email(user_id, current_site_domain):
 	user = Member.objects.get(pk=user_id)
 	email_address = user.email
@@ -35,22 +62,7 @@ def send_verification_email(user_id, current_site_domain):
 		mail_subject, message, to=[email_address]
 	)
 	email.send()
-
-def signup(request):
-	if request.method == 'POST':
-		form = SignUpForm(request.POST)
-		if form.is_valid():
-			form.save()
-			email = form.cleaned_data.get('email')
-			raw_password = form.cleaned_data.get('password1')
-			member = authenticate(email=email, password=raw_password)
-			login(request, member)
-			current_site = get_current_site(request)
-			send_verification_email(member.id, current_site.domain)
-			return redirect('/members/preferences/')
-	else:
-		form = SignUpForm()
-	return render(request, 'register.html', {'form': form})
+	connection.close()
 
 def login_user(request, template_name='registration/login.html', extra_context=None):
 	#print(request)
@@ -76,6 +88,19 @@ def preference_selection(request):
 		return render(request, 'members/preferences.html', {'form': form})
 
 @method_decorator(login_required, name='dispatch')
+class EditProfile(UpdateView):
+	model = Member
+	form_class = ProfileForm
+	template_name_suffix = '_edit_form'
+
+	def get_object(self):
+		 return Member.objects.get(id=self.request.user.id)
+
+	def get_success_url(self):
+		messages.add_message(self.request, messages.INFO, 'Successfully updated your info!', extra_tags='alert-success')
+		return reverse_lazy('member_profile')
+
+@method_decorator(login_required, name='dispatch')
 class EditPreferences(UpdateView):
 	model = Preference
 	form_class = PreferenceForm
@@ -86,11 +111,11 @@ class EditPreferences(UpdateView):
 
 	def get_success_url(self):
 		messages.add_message(self.request, messages.INFO, 'Successfully updated your preferences!', extra_tags='alert-success')
-		return reverse_lazy('member_profile', kwargs={'user_id': self.request.user.id})
+		return reverse_lazy('member_profile')
 
 @login_required
-def profile(request, user_id):
-	member = get_object_or_404(Member, pk=user_id)
+def profile(request):
+	member = get_object_or_404(Member, pk=request.user.id)
 	return render(request, 'members/profile.html',{'member': member})
 
 def activate(request, uidb64, token):
@@ -107,27 +132,19 @@ def activate(request, uidb64, token):
 	else:
 		return render(request, 'email/confirmation.html',{'answer': 'Invalid link, please resend email INSERT BUTTON'})
 
+def auth_view(request):
 
+    username = request.POST.get('username', '')
+    password = request.POST.get('password', '')
+    user = auth.authenticate(username=username, password=password)
+    print(user)
+    if user is not None:
+        if user.is_active:
 
+            auth.login(request, user)
+            return redirect('/')
+    else :
+        return HttpResponseRedirect("Invalid username or password")
 
-# def auth_view(request):
-#
-#     # here you get the post request username and password
-#     username = request.POST.get('username', '')
-#     password = request.POST.get('password', '')
-#     print(password)
-#     # authentication of the user, to check if it's active or None
-#     user = auth.authenticate(username=username, password=password)
-#
-#     if user is not None:
-#         if user.is_active:
-#             # this is where the user login actually happens, before this the user
-#             # is not logged in.
-#             auth.login(request, user)
-#
-#             ...
-#             return ...
-#
-#     else :
-#         return HttpResponseRedirect("Invalid username or password")
-
+def gimme_salt():
+	return ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(N))

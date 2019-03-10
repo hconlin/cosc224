@@ -4,6 +4,8 @@ html, body{
 
 .navbar {
     height: 77px;
+    display: flex !important;
+    flex-wrap: nowrap;
     background-color: white !important;
     border-bottom: solid 1px #dfe0e1;
 }

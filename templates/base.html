@@ -7,8 +7,8 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
         <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
         {% block head %}
-        <title>title here</title>
-        {% endblock %}
+		<title>OC Computer Science Club</title>
+		{% endblock %}
     </head>
 
     <body>
@@ -24,6 +24,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/events/show">Events</a>
+                    <a class="nav-link" href="/events/">Events</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/news/show">News</a>
@@ -45,17 +46,17 @@
                     </li>
                 {% endif %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'member_profile' user.id %}">Edit Profile</a>
+                    <a class="nav-link" href="{% url 'member_profile' %}">Edit Profile</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'logout' %}">Logout</a>
                 </li>
             {% else %}
                 <li class="nav-item">
-                    <a class="nav-link" href="/members/login">Login</a>
+                    <a class="nav-link" href="{% url 'login' %}">Login</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/members/register">Sign up</a>
+                    <a class="nav-link" href="{% url 'signup' %}">Sign up</a>
                 </li>
             {% endif %}
         </ul>

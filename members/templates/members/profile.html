@@ -7,8 +7,8 @@
 <body>
 {% block content %}
   <h1>{{ member.first_name }} {{ member.last_name }}</h1>
-
-  <a href="{% url 'edit_preferences' member.id %}">edit</a>
+  
+  <a href="{% url 'edit_preferences' %}">edit</a>
 {% endblock %}
 </body>
 </html>

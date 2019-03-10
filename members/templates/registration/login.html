@@ -9,7 +9,7 @@
         <div class="member-form">
         <div class="img-wrapper"><img class='form-logo' src="{% static 'images/logo.gif' %}" height="80px" width="80px"></div>
         <div class="header">Sign in to Cosc Events</div>
-            <form method="post">
+            <form method="post" action="{% url 'auth' %}">
                 {% csrf_token %}
                 {% for field in form %}
                     {{ field }}
@@ -20,7 +20,7 @@
             <div class="wrapper"><button type="submit" class="form-button">Login</button></div>
             </form>
         <div class="wrapper">
-            <a class="links" href="/members/register">Don't have an account? Sign up</a><br>
+            <a class="links" href="{% url 'signup' %}">Don't have an account? Sign up</a><br>
             <a class="links" href="/members/password/recover">Forgot password</a>
         </div>
         </div>

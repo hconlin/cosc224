@@ -1,0 +1,30 @@
+{% include 'base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'members/preferences.css' %}">
+</head>
+<body>
+ <div class="preference-form">
+    <div class="header">Edit Profile</div>
+      <form action="" method="post">
+        {% csrf_token %}
+        {% for field in form %}
+            {% if field.name == 'date_of_birth' %}
+                <div class="date-wrapper"><div class="label">Date of Birth</div>{{ field }}</div>
+                    {% else %}
+                        {{ field }}
+                    {%  endif %}
+          {% for error in field.errors %}
+              <p style="color: red">{{ error }}</p>
+            {% endfor %}
+        {% endfor %}
+      <div class="button-wrapper">
+        <input type="submit" value="Update Info", class="form-button">
+      </div>
+      </form>
+    </div>
+</body>
+</html>

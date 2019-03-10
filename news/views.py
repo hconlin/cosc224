@@ -45,3 +45,10 @@ def deleteNews(request, news_id):
     news.delete()
     messages.add_message(request, messages.INFO, 'News successfully deleted!', extra_tags='alert-success')
     return HttpResponseRedirect('/')
+
+def news(request):
+	#currently iterates through all events. 
+	context = {
+		'news': News.objects.all()
+	}
+	return render(request, 'news/newz.html', context)

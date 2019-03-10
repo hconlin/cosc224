@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+		{% block head %}
+		<title> News </title>
+		{% endblock %}
+
+			
+		<br />
+	
+
+<!-- Iterates through the events -->
+{% for news in news %}
+
+
+		
+		<!-- Below should probably be an unordered list instead -->
+
+		<h2>Title: <a href= "/news/{{ news.id }}" ><b>{{ news.title }}</b></a></h2>
+		<p><b>Description: </b>news description here</p>
+
+		<p><b>Image: </b> <img src="{{ news.image_link }}" alt="news Image" height="250" width="250"></p>
+
+	
+		<br />
+		<br />
+		<br />
+
+{% endfor %}
+{% endblock content %}

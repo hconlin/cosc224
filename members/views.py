@@ -1,7 +1,7 @@
 from django.contrib.auth import login, authenticate
 from django.core.mail import EmailMessage
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import SignUpForm, LoginForm
+from .forms import SignUpForm, LoginForm, ProfileForm
 from django.contrib.auth.decorators import login_required
 from members.models import Preference, Member
 from django.views.generic.edit import UpdateView
@@ -9,7 +9,6 @@ from django.urls import reverse_lazy
 from django.contrib import messages
 from members.forms import PreferenceForm
 from django.utils.decorators import method_decorator
-import json
 from django.http import HttpResponse
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.contrib.sites.shortcuts import get_current_site
@@ -22,6 +21,7 @@ from django.db import connection
 from threading import Thread
 import string
 import random
+import json
 N = 32
 
 def start_new_thread(function):
@@ -81,6 +81,19 @@ def preference_selection(request):
 		else:
 			form = PreferenceForm()
 		return render(request, 'members/preferences.html', {'form': form})
+
+@method_decorator(login_required, name='dispatch')
+class EditProfile(UpdateView):
+	model = Member
+	form_class = ProfileForm
+	template_name_suffix = '_edit_form'
+
+	def get_object(self):
+		 return Member.objects.get(id=self.request.user.id)
+
+	def get_success_url(self):
+		messages.add_message(self.request, messages.INFO, 'Successfully updated your info!', extra_tags='alert-success')
+		return reverse_lazy('member_profile')
 
 @method_decorator(login_required, name='dispatch')
 class EditPreferences(UpdateView):

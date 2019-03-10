@@ -17,8 +17,14 @@ from .tokens import account_activation_token
 from django.contrib.auth.models import User
 from django.template.loader import render_to_string
 from django.contrib import auth
-from background_task import background
+from django.db import connection
+from threading import Thread
+import string
+import random
+from django.contrib.auth.hashers import make_password
 import json
+
+N = 32
 
 def start_new_thread(function):
     def decorator(*args, **kwargs):
@@ -31,17 +37,21 @@ def signup(request):
 	if request.method == 'POST':
 		form = SignUpForm(request.POST)
 		if form.is_valid():
-			form.save()
+			user = form.save(commit=False)
+			user_salt = gimme_salt()
+			user.user_salt = user_salt
+
 			email = form.cleaned_data.get('email')
 			raw_password = form.cleaned_data.get('password1')
-			member = authenticate(email=email, password=raw_password)
+			salted_pass = raw_password + user_salt
+			user.password = make_password(salted_pass)
+			user.save()
+			member = authenticate(email=email, password=salted_pass)
 			login(request, member)
 			current_site = get_current_site(request)
-
-			send_verification_email(member.id, current_site.domain)
-
 			current_site = current_site.domain
 			send_verification_email(member.id, current_site)
+
 			return redirect('/preferences/')
 	else:
 		form = SignUpForm()
@@ -63,12 +73,6 @@ def send_verification_email(user_id, current_site_domain):
 	)
 	email.send()
 	connection.close()
-
-def login_user(request, template_name='registration/login.html', extra_context=None):
-	#print(request)
-	response = auth_views.login(request, template_name)
-	if request.POST.has_key('remember_me'):
-		request.session.set_expiry(60 * 60 * 24 * 365)
 
 @login_required
 def preference_selection(request):
@@ -136,8 +140,13 @@ def auth_view(request):
 
     username = request.POST.get('username', '')
     password = request.POST.get('password', '')
+    	
+    user = Member.objects.filter(email__contains=username)
+    print(user[0].user_salt)
+    salt = user[0].user_salt
+    password = password+salt
     user = auth.authenticate(username=username, password=password)
-    print(user)
+
     if user is not None:
         if user.is_active:
 

@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'members.apps.MembersConfig',
     'events.apps.EventsConfig',
     'news.apps.NewsConfig',
-    'background_task',
+
 ]
 
 MIDDLEWARE = [

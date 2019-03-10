@@ -21,6 +21,11 @@
               <p style="color: red">{{ error }}</p>
             {% endfor %}
         {% endfor %}
+
+        <a href="{% url 'edit_preferences' %}">
+            <button class="form-button">Edit Preferences </button>
+        </a>
+
       <div class="button-wrapper">
         <input type="submit" value="Update Info", class="form-button">
       </div>

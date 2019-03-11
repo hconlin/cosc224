@@ -115,7 +115,7 @@ input:focus{
 }
 
 .alert-danger{
-    height: 50px;
-    line-height: 50px;
-    padding-left: 20px;
+    position: inherit;
+    margin-left: 0;
+    width: 600px;
 }

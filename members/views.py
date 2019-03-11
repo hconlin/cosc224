@@ -97,6 +97,29 @@ def preference_selection(request):
 		else:
 			form = PreferenceForm()
 		return render(request, 'members/preferences.html', {'form': form})
+		
+		
+@method_decorator(login_required, name='dispatch')
+class ViewProfile(UpdateView):
+	model = Member
+	form_class = ProfileForm
+	template_name_suffix = '_profile'
+
+	def get_object(self):
+		return Member.objects.get(id=self.request.user.id)
+		
+		
+@method_decorator(login_required, name='dispatch')
+class DeleteAccount(UpdateView):
+	model = Member
+	form_class = ProfileForm
+	template_name_suffix = '_Delete'
+
+	def get_object(self):
+		return Member.objects.get(id=self.request.user.id)
+		
+	def get_success_url(self):
+		return reverse_lazy('member_profile_view')
 
 
 @method_decorator(login_required, name='dispatch')
@@ -110,7 +133,7 @@ class EditProfile(UpdateView):
 
 	def get_success_url(self):
 		messages.add_message(self.request, messages.INFO, 'Successfully updated your info!', extra_tags='alert-success')
-		return reverse_lazy('member_profile')
+		return reverse_lazy('member_profile_view')
 
 
 @method_decorator(login_required, name='dispatch')
@@ -125,7 +148,7 @@ class EditPreferences(UpdateView):
 	def get_success_url(self):
 		messages.add_message(self.request, messages.INFO, 'Successfully updated your preferences!',
 							 extra_tags='alert-success')
-		return reverse_lazy('member_profile')
+		return reverse_lazy('member_profile_view')
 
 
 @login_required

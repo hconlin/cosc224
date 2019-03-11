@@ -1,0 +1,24 @@
+{% include 'base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'members/preferences.css' %}">
+</head>
+<body>
+{% block content %}
+	<div class="preference-form">
+		<div class="header">Member Profile:</div>
+			<h2><center>{{ member.first_name }} {{ member.last_name }}</center></h2>
+			<p>Nickname: {{ member.username }}</p>
+			<p>Email: {{ member.email }}</p>
+			<p>Birthday: {{ member.date_of_birth }}</p>
+			<p>Status: member</p>
+			<br>
+			<a href="{% url 'edit_preferences' %}">Edit Preferences</a><br>
+			<a href="{% url 'member_profile' %}">Edit Profile</a><br>
+			<a href="{% url 'delete_account' %}">Delete Account</a><br><br>
+{% endblock %}
+</body>
+</html>

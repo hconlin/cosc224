@@ -11,13 +11,20 @@
 	<div class="preference-form">
 		<div class="header">Member Profile:</div>
 			<h2><center>{{ member.first_name }} {{ member.last_name }}</center></h2>
-			<p>Nickname: {{ member.username }}</p>
+			<!-- <p>Nickname: {{ member.username }}</p> -->
+			<br>
 			<p>Email: {{ member.email }}</p>
 			<p>Birthday: {{ member.date_of_birth }}</p>
 			<p>Status: member</p>
 			<br>
-			<a href="{% url 'edit_preferences' %}">Edit Preferences</a><br>
-			<a href="{% url 'member_profile' %}">Edit Profile</a><br>
+			{% if email_activated == false %}
+				<h4><center><font color="red">**Your account is not yet active**</font></center></h4> 
+				<center>Please click the link in your email activation to activate.</center>
+				<br>
+			{% else %}
+				<a href="{% url 'edit_preferences' %}">Edit Preferences</a><br>
+				<a href="{% url 'member_profile' %}">Edit Profile</a><br>
+			{% endif %}
 			<a href="{% url 'delete_account' %}">Delete Account</a><br><br>
 {% endblock %}
 </body>

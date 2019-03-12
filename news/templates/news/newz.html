@@ -7,19 +7,20 @@
 
 			
 		<br />
-	
-
+	 <main role="main" class="container">
+                <div class="row">
+                    <div class="col-md">
 <!-- Iterates through the events -->
 {% for news in news %}
 
 
-		
+		<p><img src="{{ news.image_link }}" alt="news Image" height="250" width="250"></p>
 		<!-- Below should probably be an unordered list instead -->
+		<p><i> {{ news.date }} </i></p>
+		<h2><a href= "/news/{{ news.id }}" ><b>{{ news.title }}</b></a></h2>
+		<p>{{ news.body }}</p>
 
-		<h2>Title: <a href= "/news/{{ news.id }}" ><b>{{ news.title }}</b></a></h2>
-		<p><b>Description: </b>news description here</p>
-
-		<p><b>Image: </b> <img src="{{ news.image_link }}" alt="news Image" height="250" width="250"></p>
+		
 
 	
 		<br />
@@ -27,4 +28,11 @@
 		<br />
 
 {% endfor %}
+
+
+
+       </div>
+                    
+                </div>
+            </main>
 {% endblock content %}

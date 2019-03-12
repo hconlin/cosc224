@@ -9,6 +9,7 @@ class Event(models.Model):
 	end_date = models.DateField()
 	location = models.CharField(max_length=200)
 	location_details = models.TextField(max_length=2000)
+	event_details = models.TextField(max_length=2000)
 	cost = models.DecimalField(max_digits=8, decimal_places=2)
 	age_requirement = models.IntegerField()
 	link = models.CharField(max_length=200)

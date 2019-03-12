@@ -1,22 +1,27 @@
 {% include "base.html" %}
-
+{% load static %} 
 {% block content %}
 		{% block head %}
 		<title> COSC CLUB </title>
 		{% endblock %}
 <br />
+
+   <main role="main" class="container">
+                <div class="row">
+                    <div class="col-md">
 <!-- Iterates through the events -->
 {% for event in events %}
-	
-	
+		
+		<p><img src="{{ event.image_link }}" alt="Event Image" height="250" width="250"></p>
+		<p><i>{{ event.start_date }}</i></p>
 		
 		<!-- Below should probably be an unordered list instead -->
+		
+		<h2><b><a href= "/events/{{ event.id }}" >{{ event.title }}</a></b></h2>
+		<p>{{event.event_details }} </p>
 
-		<h2>Title: <b>{{ event.title }}</b></h2><br/><br />
-		<p><b>Description: </b> Event description here</p>
 
 
-		<p><b>Image: </b> <img src="{{ event.image_link }}" alt="Event Image" height="250" width="250"></p>
 		
 		<br />
 		<br />
@@ -25,24 +30,53 @@
 
 {% endfor %}
 
+       </div>
+                    
+                </div>
+            </main>
+
 <div class="container text-center">    
-  <h3>What We Do</h3><br>
+  <br>
   <div class="row">
     <div class="col-sm-4">
-      <a href= "{% url 'events' %}"> <img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image"></a>
+      <a href= "{% url 'events' %}"> <img src="{% static 'images/event-photo.jpg' %}" class="img-responsive" style="width:100%" alt="Image"></a>
       <p>EVENTS</p>
     </div>
     <div class="col-sm-4"> 
-      <a href="{% url 'news' %}"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image"></a>
+      <a href="{% url 'news' %}"><img src="{% static 'images/news-photo.jpg' %}" class="img-responsive" style="width:100%" alt="Image"></a>
       <p>NEWS</p>    
     </div>
     <div class="col-sm-4"> 
-      <a href="{% url 'about_us' %}"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image"></a>
+      <a href="{% url 'about_us' %}"><img src="{% static 'images/aboutus-photo.jpg' %}" class="img-responsive" style="width:100%" alt="Image"></a>
       <p>ABOUT US</p>    
     </div>
   </div>
 </div><br>
 
+ {% if user.is_authenticated %}
+                {% if user.is_staff %}
+                	<div class="container text-center">    
+  <br>
+  <div class="row">
+    <div class="col-sm-4">
+      <a href= "events/create/">Create Event</a>
+      
+    </div>
+    <div class="col-sm-4"> 
+      <a href="news/create/">Create News</a>
+        
+    </div>
+    <div class="col-sm-4"> 
+      <a href="{% url 'about_us' %}">
+      Undefined
+      </a>
+     
+    </div>
+  </div>
+</div>
+
+                 {% endif %}
+ {% endif %}
 
 {% endblock content %}
 

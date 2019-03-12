@@ -1,18 +1,23 @@
-{% extends 'base.html' %}
+{% include 'base.html' %}
 
 
 		{% block head %}
 		<title> {{ event.title }} </title>
 		{% endblock %}
 
+
+ <main role="main" class="container">
+                <div class="row">
+                    <div class="col-md">
 {% block content %}
 
 
-  <h1>{{ event.title }}</h1>
+  
   <h2>Title: <b>{{ event.title }}</b></h2>
   <p><b>Start Time: </b>{{ event.start_time }}</p>
   <p><b>Start Date: </b>{{ event.start_date }}</p>
   <p><b>End Date: </b>{{ event.end_date }}</p>
+  <p><b>Event Details</b> {{ event.event_details }} </p>
   <p><b>Location: </b>{{ event.location }}</p>
   <p><b>Location Details: </b>{{ event.location_details }}</p>
   <p><b>Cost:</b> {{ event.cost }}</p>
@@ -30,4 +35,10 @@
   <a href="{% url 'edit_event' event.id %}">Edit Preferences</a>
 
   <a href="{% url 'delete_event' event.id %}">delete</a>
+
+
+  </div>
+                    
+                </div>
+            </main>
 {% endblock %}

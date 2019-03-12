@@ -4,6 +4,7 @@ from members.models import Member
 class Event(models.Model):
 	user_id = models.ForeignKey(Member, on_delete=models.CASCADE)
 	title = models.CharField(max_length=200)
+	description = models.TextField(max_length = 2000)
 	start_time = models.TimeField()
 	start_date = models.DateField()
 	end_date = models.DateField()

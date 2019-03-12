@@ -1,38 +1,33 @@
 {% include "base.html" %}
 
 {% block content %}
-		{% block head %}
-		<title> News </title>
-		{% endblock %}
 
+{% block head %}
+<title> News </title>
+{% endblock %}
+
+<br />
+
+<main role="main" class="container">
+	<div class="row">
+		<div class="col-md">
+			<!-- Iterates through the events -->
+			{% for news in news %}
+
+			<p><img src="{{ news.image_link }}" alt="news Image" height="250" width="250"></p>
+			<!-- <p><i> {{ news.date }} </i></p> -->
+			<h2><a href= "/news/{{ news.id }}" ><b>{{ news.title }}</b></a></h2>
+			<p>{{ news.body }}</p>
+
+			<br />
+			<br />
+			<br />
 			
-		<br />
-	 <main role="main" class="container">
-                <div class="row">
-                    <div class="col-md">
-<!-- Iterates through the events -->
-{% for news in news %}
+			{% empty %}
+			<h1>No news to display. Please check back later</h1>
+			{% endfor %}
+		</div>
 
-
-		<p><img src="{{ news.image_link }}" alt="news Image" height="250" width="250"></p>
-		<!-- Below should probably be an unordered list instead -->
-		<p><i> {{ news.date }} </i></p>
-		<h2><a href= "/news/{{ news.id }}" ><b>{{ news.title }}</b></a></h2>
-		<p>{{ news.body }}</p>
-
-		
-
-	
-		<br />
-		<br />
-		<br />
-
-{% endfor %}
-
-
-
-       </div>
-                    
-                </div>
-            </main>
+	</div>
+</main>
 {% endblock content %}

@@ -3,10 +3,12 @@ from django.shortcuts import render, get_object_or_404
 from events.forms import EventForm
 from django.utils.decorators import method_decorator
 from django.contrib.admin.views.decorators import staff_member_required
-from events.models import Event
+from events.models import *
 from django.views.generic.edit import UpdateView
 from django.urls import reverse_lazy
 from django.contrib import messages
+from django.db.models import Q
+from django.utils import timezone
 
 # Create your views here.
 @staff_member_required
@@ -16,7 +18,7 @@ def event_form(request):
 		if form.is_valid():
 			cd = form.cleaned_data
 			event = form.save(commit=False)
-			event.user_id = request.user
+			event.user_id = request.user.pk
 			event.save()
 			messages.add_message(request, messages.INFO, 'Event successfully created!', extra_tags='alert-success')
 			return HttpResponseRedirect('/events/' + str(event.id))
@@ -46,16 +48,26 @@ def deleteEvent(request, event_id):
     return HttpResponseRedirect('/')
 
 def home(request):
-	#currently iterates through all events. 
-	context = {
-		'events': Event.objects.all()[:1]
-	}
+	now = timezone.now()
+	if HomePageEvent.objects.first():
+		context = {
+			'events': HomePageEvent.objects.all()[:1]
+		}
+	elif Event.objects.first():
+		context = {
+			'events': Event.objects.filter(start_date__gte=now).order_by('-start_date')[:1]
+		}
+	else:
+		context ={
+
+		}
+
 	return render(request, 'events/home.html', context)
 
 
 def events(request):
 	#currently iterates through all events. 
 	context = {
-		'events': Event.objects.all()
+		'events': Event.objects.all().order_by('-start_date')
 	}
 	return render(request, 'events/events.html', context)

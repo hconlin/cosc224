@@ -80,8 +80,14 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    },
+    'events_db': {
+         'ENGINE': 'django.db.backends.sqlite3',
+         'NAME': os.path.join(BASE_DIR, 'eventsDB.sqlite3'),
     }
 }
+
+DATABASE_ROUTERS = ['events.router.eventsRouter', 'news.router.newsRouter']
 
 
 # Password validation

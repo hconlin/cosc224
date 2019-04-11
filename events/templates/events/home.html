@@ -9,51 +9,63 @@
 <main role="main" class="container">
   <div class="row">
     <div class="col-md">
-    
+
       {% if events %}
-         {% for event in events %}
-             <p><img src="{{ event.image_link }}" alt="Event Image" height="250" width="250"></p>
-              <!--<p><i>{{ event.start_date }}</i></p>-->
-             <h2><b><a href= "/events/{{ event.id }}" >{{ event.title }}</a></b></h2>
-             <p>{{events.event_details }} </p>
+      <p><img src="{{ event.image_link }}" onerror="this.onerror=null;this.src='http://www.rangerwoodperiyar.com/images/joomlart/demo/default.jpg';" alt="Event Image" height="250" width="250"></p>
+      <!--<p><i>{{ events.start_date }}</i></p>-->
+      <h2><b><a href= "/events/{{ events.id }}" >{{ events.title }}</a></b></h2>
+      <p>{{events.event_details }} </p>
 
-              <br />
-              <br />
-              <br />
-    
+      <br />
+      <br />
+      <br />
 
-
-
-
-
-
-           {% endfor %}
       {% else %}
-        <h1>DEFAULT HOMEPAGE</h1>
+
+      
+      <img src="/static/images/logo2.png" width="250" height="250" align="left">
+            <h1>Welcome To The <br>
+       <strong> Okanagan College
+      Computer Science Club</strong></h1>
+
       {% endif %}
 
     </div>
 
   </div>
+  <hr>
 </main>
 
 <div class="container text-center">    
   <br>
   <div class="row">
+
+
     <div class="col-sm-4">
-      <a href= "{% url 'events' %}"> <img src="{% static 'images/event-photo.jpg' %}" class="img-responsive" style="width:100%" alt="Image"></a>
-      <p>EVENTS</p>
+      <div class="imglink">
+        <a href= "{% url 'events' %}"> <img src="{% static 'images/event-photo.jpg' %}" class="img-responsive" style="width:100%; border-radius: 25px;" alt="Image"></a>
+       </div>
+    
+    </div>
+
+    <div class="col-sm-4"> 
+      <div class="imglink">
+      <a href="{% url 'news' %}"><img src="{% static 'images/news-photo.jpg' %}" class="img-responsive" style="width:100%; border-radius: 25px;" alt="Image"></a>
+      </div>
     </div>
     <div class="col-sm-4"> 
-      <a href="{% url 'news' %}"><img src="{% static 'images/news-photo.jpg' %}" class="img-responsive" style="width:100%" alt="Image"></a>
-      <p>NEWS</p>    
-    </div>
-    <div class="col-sm-4"> 
-      <a href="{% url 'about_us' %}"><img src="{% static 'images/aboutus-photo.jpg' %}" class="img-responsive" style="width:100%" alt="Image"></a>
-      <p>ABOUT US</p>    
+      <div class="imglink">
+        <a href="{% url 'about_us' %}"><img src="{% static 'images/aboutus-photo.jpg' %}" class="img-responsive" style="width:100%; border-radius: 25px;" alt="Image"></a>
+      </div> 
     </div>
   </div>
 </div><br>
+
+
+
+
+
+
 
 {% if user.is_authenticated %}
 {% if user.is_staff %}
@@ -61,19 +73,28 @@
   <br>
   <div class="row">
     <div class="col-sm-4">
-      <a href= "events/create/">Create Event</a>
+      <a href= "events/create/" class="btn btn-lg btn-info " role="button">Create Event</a>
       
     </div>
     <div class="col-sm-4"> 
-      <a href="news/create/">Create News</a>
+      <a href="news/create/" class="btn btn-lg btn-info" role="button">Create News</a>
 
     </div>
+    {% if user.is_superuser %}
     <div class="col-sm-4"> 
-      <a href="{% url 'about_us' %}">
-        Undefined
+      <a href="{% url 'settings' %}" class="btn btn-lg btn-info" role="button">
+        Admin Panel
       </a>
 
     </div>
+    {% else %}
+    <div class="col-sm-4"> 
+      <a href="{% url 'about_us' %}" class="btn btn-lg btn-info" role="button">
+        Profile
+      </a>
+
+    </div>
+    {% endif %}
   </div>
 </div>
 

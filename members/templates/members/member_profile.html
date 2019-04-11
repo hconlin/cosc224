@@ -15,7 +15,19 @@
 			<br>
 			<p>Email: {{ member.email }}</p>
 			<p>Birthday: {{ member.date_of_birth }}</p>
-			<p>Status: member</p>
+			
+			<p>Status:
+			{% if member.is_staff%}
+				{% if member.is_superuser %}
+				Superuser
+				{% else %}
+				Event Co-ordinator
+				{% endif %}
+			{% else %}
+				Member
+			{% endif %}
+
+			</p>
 			<br>
 			{% if email_activated == 0 %}
 				<h4><center><font color="red">**Your account is not yet active**</font></center></h4> 

@@ -93,3 +93,11 @@ top: 11px;
 width: 0%;
 left: 50%;
 }
+
+.imglink:hover{
+    opacity: 0.4;
+}
+
+textArea {
+    width: 100%;
+}

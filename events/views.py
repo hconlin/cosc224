@@ -10,6 +10,7 @@ from django.urls import reverse_lazy
 from django.contrib import messages
 from django.db.models import Q
 from django.utils import timezone
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 @staff_member_required
@@ -50,14 +51,22 @@ def deleteEvent(request, event_id):
 
 def home(request):
 	now = timezone.now()
-	if HomePageEvent.objects.first():
-		context = {
-			'events': HomePageEvent.objects.all()[:1]
-		}
-	elif Event.objects.first():
-		context = {
-			'events': Event.objects.filter(start_date__gte=now).order_by('-start_date')[:1]
-		}
+	setEvent = HomePageEvent.objects.first()
+	upcomingEvent = Event.objects.filter(start_date__gte=now).order_by('start_date').first()
+	
+
+
+	#If event is set
+	if setEvent and setEvent.active == True:
+			context = {
+				'events': setEvent,
+			}
+	#Else display most recent	
+	elif upcomingEvent:
+			context = {
+				'events': upcomingEvent,
+			}
+	#Empty Database
 	else:
 		context ={
 
@@ -72,3 +81,33 @@ def events(request):
 		'events': Event.objects.all().order_by('-start_date')
 	}
 	return render(request, 'events/events.html', context)
+
+@login_required(login_url='/login')
+def settings(request):
+	now = timezone.now()
+	upcoming = Event.objects.filter(start_date__gte=now).order_by('-start_date')
+	eventPicked = HomePageEvent.objects.first()
+
+	context = {
+		'upcomingEvents': upcoming,
+		'setEvent': eventPicked
+	}
+	
+
+	if request.method == 'POST':
+		selected = request.POST.get('settings')
+
+		if selected == 'upcoming' and eventPicked:
+			eventPicked.active = False
+			eventPicked.save()
+		elif selected == 'set':
+			
+			chosenEvent = request.POST.get('eventselect')
+			
+			if eventPicked:	
+				eventPicked.update(upcoming.get(pk=chosenEvent))
+			
+		messages.add_message(request, messages.INFO, 'Home Page Updated!', extra_tags='alert-success')
+
+
+	return render(request, 'events/set_home_event.html', context)

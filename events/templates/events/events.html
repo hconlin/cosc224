@@ -39,15 +39,20 @@ $('#tron').hover(function() {
 <main role="main" class="container">
 	<div class="row">
 		<div class="col-md">
-			
+			{% if user.is_staff %}
+				<br>
+				<a href= "create/" class="btn-lg btn-info" role="button">Create Event</a>
+				<br>
+				<br>
+			{% endif %}			
 
 			<!-- Iterates through the events -->
 			{% for event in events %}
 			
 			<a href= "/events/{{ event.id }}" style="text-decoration: none;" class="btn-default btn-lg" role="button">
 			<div class="jumbotron" id="tron">
-			
-			<p> <img src="{{ event.image_link }}" class="rounded float-left" alt="Event Image" align="left" height="200" width="200"></p>
+			<p><img src="{{ event.image_link }}" onerror="this.onerror=null;this.src='http://www.rangerwoodperiyar.com/images/joomlart/demo/default.jpg';" class="rounded float-left" align="left" alt="Event Image" height="200" width="200"></p>
+
 			<p><i> {{ event.start_date }}</i></p>
 			<h2>  <b>  {{ event.title }}</b></h2>
 			<p>  {{event.description }} </p>
@@ -55,8 +60,11 @@ $('#tron').hover(function() {
 			</a>
 			
 			
+
 			{% empty %}
 			<h1>No Events to display. Please check back later.</h1>
+
+
 			{% endfor %}
 			
 		</div>

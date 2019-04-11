@@ -27,7 +27,8 @@
   <p><b>Categories:</b> {{ event.category }}</p>
   <p><b>Contact Name:</b> {{ event.event_coordinator_name }}</p>
   <p><b>Contact Email:</b> {{ event.event_coordinator_email }}</p>
-  <p><b>Image: </b> <img src="{{ event.image_link }}" alt="Event Image" height="250" width="250"></p>
+  <p><b>Image: </b> <img src="{{ event.image_link }}" onerror="this.onerror=null;this.src='http://www.rangerwoodperiyar.com/images/joomlart/demo/default.jpg';" alt="Event Image" height="250" width="250"></p>
+  <br />
 <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}">
 <button type="button" class="btn btn-primary btn-lg" aria-pressed="true">
 Share on Facebook
@@ -38,6 +39,7 @@ Share on Facebook
 Share on Twitter
 </button>
 </a>
+
 		
 		<br />
 		<br />

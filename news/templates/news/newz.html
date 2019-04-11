@@ -30,6 +30,13 @@
 <main role="main" class="container">
 	<div class="row">
 		<div class="col-md">
+						{% if user.is_staff %}
+				<br>
+				<a href= "create/" class="btn-lg btn-info" role="button">Create News</a>
+				<br>
+				<br>
+			{% endif %}
+
 			<!-- Iterates through the events -->
 			{% for news in news %}
 			<a href= "/news/{{ news.id }}" style="text-decoration: none;" class="btn-default btn-lg" role="button">
@@ -47,7 +54,8 @@
 			<br />
 			
 			{% empty %}
-			<h1>No news to display. Please check back later</h1>
+			<h1>No News to display. Please check back later.</h1>
+
 			{% endfor %}
 		</div>
 

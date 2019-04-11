@@ -107,13 +107,26 @@ class ViewProfile(UpdateView):
 
 	def get_object(self):
 		return Member.objects.get(id=self.request.user.id)
-		
-		
+
+def delete(request):
+	return render(request, 'members/member_delete.html', {'member.id': member.id})
+
+
+@login_required
+def deleteUser(request, member_id):
+    user = get_object_or_404(Member, pk=member_id)
+    user.delete()
+    messages.add_message(request, messages.INFO, 'User successfully deleted!', extra_tags='alert-success')
+    return HttpResponseRedirect('/')
+
+
 @method_decorator(login_required, name='dispatch')
 class DeleteAccount(UpdateView):
 	model = Member
 	form_class = ProfileForm
-	template_name_suffix = '_Delete'
+	template_name_suffix = '_delete'
+
+
 
 	def get_object(self):
 		return Member.objects.get(id=self.request.user.id)

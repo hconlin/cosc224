@@ -20,6 +20,8 @@
 			  </div>
 			</form>
 			<br>
+			{{ member.id }}
+			<center><a href="{% url 'delete_user' member.id %}">Delete me</a></center>
 			<center><a href="{% url 'member_profile_view' %}">Ack NO! take me back to my account!</a></center>
 			<br>
 

@@ -4,6 +4,25 @@
 
 {% block head %}
 <title> News </title>
+<style>
+.jumbotron{
+	background-color:#BFC1BD;
+	color:white;
+	padding-top:20px;
+	border: 2px;
+	border-color: #000;
+	border-style: solid;
+}
+.jumbotron img{
+	display:block;
+	margin-right: 10px;
+	margin-left:auto;
+
+}
+.h2{
+	margin-top:10px;
+}
+</style>
 {% endblock %}
 
 <br />
@@ -13,11 +32,15 @@
 		<div class="col-md">
 			<!-- Iterates through the events -->
 			{% for news in news %}
+			<a href= "/news/{{ news.id }}" style="text-decoration: none;" class="btn-default btn-lg" role="button">
+			<div class="jumbotron">
 
-			<p><img src="{{ news.image_link }}" alt="news Image" height="250" width="250"></p>
+			<p><img src="{{ news.image_link }}" class="rounded float-left" alt="news Image" align="left" height="200" width="200"></p>
 			<!-- <p><i> {{ news.date }} </i></p> -->
-			<h2><a href= "/news/{{ news.id }}" ><b>{{ news.title }}</b></a></h2>
+			<h2><b>{{ news.title }}</b></h2>
 			<p>{{ news.body }}</p>
+			</div>
+			</a>
 
 			<br />
 			<br />

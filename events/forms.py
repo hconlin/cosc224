@@ -3,9 +3,9 @@ from events.models import Event
 
 class EventForm(forms.ModelForm):
 
-	EVENT_TYPE = [('game competitions', 'Game Competition'),('software competitions', 'Software Competition'),
-	('meet and greets', 'Meet & Greet'),('seminars', 'Seminar'),
-	('social networking','Social Networking'), ('job fairs', 'Job Fair')]
+	EVENT_TYPE = [('Game Competitions', 'Game Competition'),('Software Competitions', 'Software Competition'),
+	('Meet and Greets', 'Meet & Greet'),('Seminars', 'Seminar'),
+	('Social Networking','Social Networking'), ('Job Fairs', 'Job Fair')]
 
 	title = forms.CharField(label='Title')
 	description = forms.CharField(label='Description', widget=forms.Textarea)

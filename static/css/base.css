@@ -11,7 +11,8 @@ html, body{
 }
 
 .alert{
-    position: absolute;
+	z-index: 9999;
+    position: fixed;
     left:50%;
     margin-left: -350px;
     top: 100px;

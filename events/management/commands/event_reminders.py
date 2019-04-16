@@ -9,9 +9,7 @@ from django.core.mail import EmailMessage
 
 class Command(BaseCommand):
 	help = 'Send Event Reminders'
-	
 	def handle(self, *args, **kwargs):
-
 		tomorrows_date =  datetime.date.today() + datetime.timedelta(days=1)
 		print(tomorrows_date)
 		tomorrows_events = Event.objects.filter(start_date__contains=tomorrows_date)
@@ -36,10 +34,3 @@ def send_the_mail(user, event):
 		mail_subject, message, to=[email_address]
 	)
 	email.send()
-
-
-	# send_mail('Event Reminder.',
-	# event.location_details,
-	# 'compscieventsOC@gmail.com',
-	# email_list,
-	# fail_silently = False,)

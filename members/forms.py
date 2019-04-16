@@ -51,7 +51,7 @@ class ProfileForm(forms.ModelForm):
 		model = User
 		fields = ('first_name', 'last_name','email', 'date_of_birth')
 
-class EditPasswordForm(PasswordChangeForm):
+class EditPasswordForm(forms.ModelForm):
 	old_password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-input', 'placeholder': 'Old password'}))
 	new_password1 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-input', 'placeholder': 'New password'}))
 	new_password2 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-input', 'placeholder': 'Confirm new password'}))

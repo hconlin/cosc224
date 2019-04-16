@@ -9,11 +9,12 @@
   <img src='{{ news.image_link }}'height="250px" width="250px">
   <h2>{{ news.body }}</h2>
 
+
+  {% if user.is_staff %}
   <a href="{% url 'edit_news' news.id %}">edit</a>
 
   <a href="{% url 'delete_news' news.id %}">delete</a>
-  
-
+  {% endif %}
   </div>
                     
                 </div>

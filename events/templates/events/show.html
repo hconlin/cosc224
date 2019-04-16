@@ -44,11 +44,11 @@ Share on Twitter
 		<br />
 		<br />
 		<br />
-
+  {% if user.is_staff %}
   <a href="{% url 'edit_event' event.id %}">Edit Event</a>
 
   <a href="{% url 'delete_event' event.id %}">delete</a>
-
+  {% endif %}
 
   </div>
                     

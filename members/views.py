@@ -2,7 +2,7 @@ from django.contrib.auth import login, authenticate, update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from django.core.mail import EmailMessage
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import SignUpForm, LoginForm, ProfileForm, EditPasswordForm
+from .forms import SignUpForm, LoginForm, ProfileForm, EditPasswordForm, DeleteAccountForm
 from django.contrib.auth.decorators import login_required
 from members.models import Preference, Member
 from django.views.generic.edit import UpdateView
@@ -107,18 +107,37 @@ class ViewProfile(UpdateView):
 	def get_object(self):
 		return Member.objects.get(id=self.request.user.id)
 
-def delete(request):
-	return render(request, 'members/member_delete.html', {'member.id': member.id})
-
-
 @login_required
-def deleteUser(request, member_id):
-    user = get_object_or_404(Member, pk=member_id)
-    preference = get_object_or_404(Preference, user_id=member_id)
-    user.delete()
-    preference.delete()
-    messages.add_message(request, messages.INFO, 'User successfully deleted!', extra_tags='alert-success')
-    return HttpResponseRedirect('/')
+def delete(request):
+	user = request.user
+	if request.method == 'POST':
+		form = DeleteAccountForm(request.POST)
+		if form.is_valid():
+			member = Member.objects.get(email__contains=user.email)
+			passw = request.POST['check_password']
+			passw_salted = passw + member.user_salt  
+			messages.add_message(request, messages.INFO, member.email, extra_tags='alert-success')      
+			user = auth.authenticate(username=member.email, password=passw_salted)
+			if user is not None:
+				user = get_object_or_404(Member, pk=user.id)
+				preference = get_object_or_404(Preference, user_id=user.id)
+				user.delete()
+				preference.delete()
+				messages.add_message(request, messages.INFO, 'User successfully deleted!', extra_tags='alert-success')
+				return HttpResponseRedirect('/')
+			else:
+				messages.add_message(request, messages.INFO, "Incorrect Password, Please try again", extra_tags='alert-success')
+				# messages.error(request, 'Incorrect Password.')
+		else:
+			messages.error(request, 'Please correct the error below.')
+	else:
+		form = DeleteAccountForm()
+	return render(request, 'members/member_delete.html', {
+		'form': form
+    })
+
+
+
 
 
 @method_decorator(login_required, name='dispatch')

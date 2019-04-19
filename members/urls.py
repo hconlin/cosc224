@@ -11,7 +11,6 @@ urlpatterns = [
     path('profile/edit', views.EditPreferences.as_view(), name='edit_preferences'),
     path('profile/view', views.ViewProfile.as_view(), name='member_profile_view'),
 	#path('profile/delete', views.DeleteAccount.as_view(), name='delete_account'),
-    path('profile/deleted/<int:member_id>',views.deleteUser, name='delete_user' ),
     path('profile/delete', views.delete, name='delete_account'),
 	path('profile', views.EditProfile.as_view(), name='member_profile'),
     re_path(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',

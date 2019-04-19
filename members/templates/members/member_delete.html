@@ -13,8 +13,8 @@
 		<div class="header">WARNING!</div>
 			<h3><center>Entering your password below and clicking "Delete Account" will permanently delete your account!</center></h3>
 			<br>
-			<p>Name: {{member.first_name}} {{member.last_name}}</p>
-			<p>Email: {{ member.email }}</p>
+			<p>Name: {{user.first_name}} {{user.last_name}}</p>
+			<p>Email: {{ user.email }}</p>
 			<form action="" method="post">				
   {% csrf_token %}
         {% for field in form %}

@@ -59,3 +59,11 @@ class EditPasswordForm(forms.ModelForm):
 	class Meta:
 		model = User
 		fields = ('old_password', 'new_password1', 'new_password2')
+
+
+class DeleteAccountForm(forms.ModelForm):
+	check_password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-input', 'placeholder': 'Password'}))
+
+	class Meta:
+		model = User
+		fields = ('check_password',)

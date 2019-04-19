@@ -8,22 +8,31 @@
 </head>
 <body>
 {% block content %}
+
 	<div class="preference-form">
 		<div class="header">WARNING!</div>
 			<h3><center>Entering your password below and clicking "Delete Account" will permanently delete your account!</center></h3>
 			<br>
+			<p>Name: {{member.first_name}} {{member.last_name}}</p>
 			<p>Email: {{ member.email }}</p>
 			<form action="" method="post">				
-			  <a class='button-link' href="{% url 'change_password' %}">**Currently linked to change password**</a>
-			  <div class="button-wrapper">
-				<input type="submit" value="Delete Account", class="form-button">
-			  </div>
+  {% csrf_token %}
+        {% for field in form %}
+            {{ field }}
+          {% for error in field.errors %}
+              <p style="color: red">{{ error }}</p>
+            {% endfor %}
+        {% endfor %}
+			  <input type="submit" value="Delete Account" class="form-button">
 			</form>
 			<br>
-			{{ member.id }}
-			<center><a href="{% url 'delete_user' member.id %}">Delete me</a></center>
+
+			
+
+			
 			<center><a href="{% url 'member_profile_view' %}">Ack NO! take me back to my account!</a></center>
 			<br>
+
 
 {% endblock %}
 </body>

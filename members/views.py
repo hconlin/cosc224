@@ -114,7 +114,9 @@ def delete(request):
 @login_required
 def deleteUser(request, member_id):
     user = get_object_or_404(Member, pk=member_id)
+    preference = get_object_or_404(Preference, user_id=member_id)
     user.delete()
+    preference.delete()
     messages.add_message(request, messages.INFO, 'User successfully deleted!', extra_tags='alert-success')
     return HttpResponseRedirect('/')
 

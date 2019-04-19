@@ -190,8 +190,10 @@ def auth_view(request):
 	username = request.POST.get('username', '')
 	password = request.POST.get('password', '')
 	user = Member.objects.filter(email=username)
+	user_salt = user[0].user_salt
+	salted_pass = password+user_salt
 	if Member.objects.filter(email=username).exists():
-		user = auth.authenticate(username=username, password=password)
+		user = auth.authenticate(username=username, password=salted_pass)
 		if user is not None:
 			if user.is_active:
 				auth.login(request, user)
@@ -209,7 +211,6 @@ def gimme_salt():
 	return ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(N))
 
 
-#needs to be fixed
 @login_required
 def change_password(request):
     user = request.user
@@ -220,7 +221,8 @@ def change_password(request):
             old_pass = request.POST['old_password']
             new_pass_one = request.POST['new_password1']
             new_pass_two = request.POST['new_password2']
-            old_pass_salted = old_pass + member.user_salt        
+            salted_old_pass = old_pass+member.user_salt
+            print(old_pass)
             user = auth.authenticate(username=member.email, password=old_pass)
             if user is not None:
                 user.password = make_password(new_pass_one, salt=member.user_salt)

@@ -241,11 +241,9 @@ def change_password(request):
             new_pass_one = request.POST['new_password1']
             new_pass_two = request.POST['new_password2']
             salted_old_pass = old_pass+member.user_salt
-            new_salted_pass = old_pass+member.user_salt
             new_salted_pass = new_pass_one+member.user_salt
             user = auth.authenticate(username=member.email, password=salted_old_pass)
             if user is not None:
-                print(user)
                 user.password = make_password(new_salted_pass)
                 user.save()
                 auth.login(request, user)

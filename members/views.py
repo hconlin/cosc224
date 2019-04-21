@@ -241,17 +241,16 @@ def change_password(request):
             new_pass_one = request.POST['new_password1']
             new_pass_two = request.POST['new_password2']
             salted_old_pass = old_pass+member.user_salt
-            print(old_pass)
+            new_salted_pass = old_pass+member.user_salt
+            new_salted_pass = new_pass_one+member.user_salt
             user = auth.authenticate(username=member.email, password=salted_old_pass)
             if user is not None:
-                user.password = make_password(new_pass_one, salt=member.user_salt)
+                print(user)
+                user.password = make_password(new_salted_pass)
                 user.save()
                 auth.login(request, user)
                 messages.add_message(request, messages.INFO, 'Success.', extra_tags='alert-success')
                 return redirect('member_profile') 
-            else:
-            	print("It is skipping yes?")
-                # messages.error(request, 'Incorrect Password.')
         else:
             messages.error(request, 'Please correct the error below.')
     else:
@@ -259,3 +258,4 @@ def change_password(request):
     return render(request, 'members/change_password.html', {
         'form': form
     })
+

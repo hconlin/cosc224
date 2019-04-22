@@ -16,7 +16,7 @@ def news_form(request):
 		if form.is_valid():
 			cd = form.cleaned_data
 			news = form.save(commit=False)
-			news.author_id = request.user
+			news.author_id = request.user.pk
 			news.date = datetime.now()
 			news.save()
 			messages.add_message(request, messages.INFO, 'News successfully created!', extra_tags='alert-success')
@@ -49,6 +49,6 @@ def deleteNews(request, news_id):
 def news(request):
 	#currently iterates through all events. 
 	context = {
-		'news': News.objects.all()
+		'news': News.objects.all().order_by('-date')
 	}
 	return render(request, 'news/newz.html', context)

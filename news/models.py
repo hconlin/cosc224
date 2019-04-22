@@ -3,7 +3,7 @@ from members.models import Member
 from django.urls import reverse
 
 class News(models.Model):
-	author_id = models.ForeignKey(Member, on_delete=models.CASCADE)
+	author_id = models.IntegerField()
 	title = models.CharField(max_length=200)
 	date = models.DateField()
 	body = models.TextField(max_length=2000)

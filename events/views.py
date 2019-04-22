@@ -1,12 +1,16 @@
+
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from events.forms import EventForm
 from django.utils.decorators import method_decorator
 from django.contrib.admin.views.decorators import staff_member_required
-from events.models import Event
+from events.models import *
 from django.views.generic.edit import UpdateView
 from django.urls import reverse_lazy
 from django.contrib import messages
+from django.db.models import Q
+from django.utils import timezone
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 @staff_member_required
@@ -16,7 +20,7 @@ def event_form(request):
 		if form.is_valid():
 			cd = form.cleaned_data
 			event = form.save(commit=False)
-			event.user_id = request.user
+			event.user_id = request.user.pk
 			event.save()
 			messages.add_message(request, messages.INFO, 'Event successfully created!', extra_tags='alert-success')
 			return HttpResponseRedirect('/events/' + str(event.id))
@@ -46,16 +50,64 @@ def deleteEvent(request, event_id):
     return HttpResponseRedirect('/')
 
 def home(request):
-	#currently iterates through all events. 
-	context = {
-		'events': Event.objects.all()[:1]
-	}
+	now = timezone.now()
+	setEvent = HomePageEvent.objects.first()
+	upcomingEvent = Event.objects.filter(start_date__gte=now).order_by('start_date').first()
+	
+
+
+	#If event is set
+	if setEvent and setEvent.active == True:
+			context = {
+				'events': setEvent,
+			}
+	#Else display most recent	
+	elif upcomingEvent:
+			context = {
+				'events': upcomingEvent,
+			}
+	#Empty Database
+	else:
+		context ={
+
+		}
+
 	return render(request, 'events/home.html', context)
 
 
 def events(request):
 	#currently iterates through all events. 
 	context = {
-		'events': Event.objects.all()
+		'events': Event.objects.all().order_by('-start_date')
 	}
 	return render(request, 'events/events.html', context)
+
+@login_required(login_url='/login')
+def settings(request):
+	now = timezone.now()
+	upcoming = Event.objects.filter(start_date__gte=now).order_by('-start_date')
+	eventPicked = HomePageEvent.objects.first()
+
+	context = {
+		'upcomingEvents': upcoming,
+		'setEvent': eventPicked
+	}
+	
+
+	if request.method == 'POST':
+		selected = request.POST.get('settings')
+
+		if selected == 'upcoming' and eventPicked:
+			eventPicked.active = False
+			eventPicked.save()
+		elif selected == 'set':
+			
+			chosenEvent = request.POST.get('eventselect')
+			
+			if eventPicked:	
+				eventPicked.update(upcoming.get(pk=chosenEvent))
+			
+		messages.add_message(request, messages.INFO, 'Home Page Updated!', extra_tags='alert-success')
+
+
+	return render(request, 'events/set_home_event.html', context)

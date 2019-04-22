@@ -2,7 +2,7 @@ from django.contrib.auth import login, authenticate, update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from django.core.mail import EmailMessage
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import SignUpForm, LoginForm, ProfileForm, EditPasswordForm
+from .forms import SignUpForm, LoginForm, ProfileForm, EditPasswordForm, DeleteAccountForm
 from django.contrib.auth.decorators import login_required
 from members.models import Preference, Member
 from django.views.generic.edit import UpdateView
@@ -33,7 +33,6 @@ def start_new_thread(function):
 		t = Thread(target=function, args=args, kwargs=kwargs)
 		t.daemon = True
 		t.start()
-
 	return decorator
 
 
@@ -107,13 +106,47 @@ class ViewProfile(UpdateView):
 
 	def get_object(self):
 		return Member.objects.get(id=self.request.user.id)
-		
-		
+
+@login_required
+def delete(request):
+	user = request.user
+	if request.method == 'POST':
+		form = DeleteAccountForm(request.POST)
+		if form.is_valid():
+			member = Member.objects.get(email__contains=user.email)
+			passw = request.POST['check_password']
+			passw_salted = passw + member.user_salt  
+			messages.add_message(request, messages.INFO, member.email, extra_tags='alert-success')      
+			user = auth.authenticate(username=member.email, password=passw_salted)
+			if user is not None:
+				user = get_object_or_404(Member, pk=user.id)
+				preference = get_object_or_404(Preference, user_id=user.id)
+				user.delete()
+				preference.delete()
+				messages.add_message(request, messages.INFO, 'User successfully deleted!', extra_tags='alert-success')
+				return HttpResponseRedirect('/')
+			else:
+				messages.add_message(request, messages.INFO, "Incorrect Password, Please try again", extra_tags='alert-success')
+				# messages.error(request, 'Incorrect Password.')
+		else:
+			messages.error(request, 'Please correct the error below.')
+	else:
+		form = DeleteAccountForm()
+	return render(request, 'members/member_delete.html', {
+		'form': form
+    })
+
+
+
+
+
 @method_decorator(login_required, name='dispatch')
 class DeleteAccount(UpdateView):
 	model = Member
 	form_class = ProfileForm
-	template_name_suffix = '_Delete'
+	template_name_suffix = '_delete'
+
+
 
 	def get_object(self):
 		return Member.objects.get(id=self.request.user.id)
@@ -176,12 +209,10 @@ def auth_view(request):
 	username = request.POST.get('username', '')
 	password = request.POST.get('password', '')
 	user = Member.objects.filter(email=username)
+	user_salt = user[0].user_salt
+	salted_pass = password+user_salt
 	if Member.objects.filter(email=username).exists():
-		print(user[0].user_salt)
-		salt = user[0].user_salt
-		password = password + salt
-		user = auth.authenticate(username=username, password=password)
-
+		user = auth.authenticate(username=username, password=salted_pass)
 		if user is not None:
 			if user.is_active:
 				auth.login(request, user)
@@ -199,19 +230,30 @@ def gimme_salt():
 	return ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(N))
 
 
-#needs to be fixed
+@login_required
 def change_password(request):
+    user = request.user
     if request.method == 'POST':
-        form = EditPasswordForm(request.user, request.POST)
+        form = EditPasswordForm(request.POST)
         if form.is_valid():
-            user = form.save()
-            update_session_auth_hash(request, user)  # Important!
-            messages.add_message(request, messages.INFO, 'Success.', extra_tags='alert-success')
-            return redirect('member_profile')
+            member = Member.objects.get(email__contains=user.email)
+            old_pass = request.POST['old_password']
+            new_pass_one = request.POST['new_password1']
+            new_pass_two = request.POST['new_password2']
+            salted_old_pass = old_pass+member.user_salt
+            new_salted_pass = new_pass_one+member.user_salt
+            user = auth.authenticate(username=member.email, password=salted_old_pass)
+            if user is not None:
+                user.password = make_password(new_salted_pass)
+                user.save()
+                auth.login(request, user)
+                messages.add_message(request, messages.INFO, 'Success.', extra_tags='alert-success')
+                return redirect('member_profile') 
         else:
             messages.error(request, 'Please correct the error below.')
     else:
-        form = EditPasswordForm(request.user)
+         form = EditPasswordForm()
     return render(request, 'members/change_password.html', {
         'form': form
     })
+

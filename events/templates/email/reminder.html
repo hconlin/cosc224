@@ -1,0 +1,12 @@
+{% autoescape off %}
+Hi {{ user.first_name }} {{user.last_name}},
+This is a reminder for {{event.title}}! Below you will find some datails	
+
+Start Time: {{event.start_time}}
+Start Date: {{event.start_date}}
+Category: {{event.category}}
+Location: {{event.location}}
+
+Thanks,
+Okanagan College Computer Science Club
+{% endautoescape %}

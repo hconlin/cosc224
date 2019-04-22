@@ -1,0 +1,46 @@
+{% include 'base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'members/preferences.css' %}">
+</head>
+<body>
+{% block content %}
+	<div class="preference-form">
+		<div class="header">HomePage Settings:</div>
+			
+
+
+
+			<form method="POST">
+				{% csrf_token %}
+				<input onclick="document.getElementById('eventselect').disabled = true;" type="radio" name="settings" value="upcoming" checked="checked"> <strong>Upcoming Event: </strong>Displays the next upcoming event<br><br>
+				
+				<input onclick="document.getElementById('eventselect').disabled = false;"
+				type="radio" name="settings" value="set"> <strong>Set Event: </strong><br>
+				
+			 	<select name="eventselect" id="eventselect" size="5" style="min-width:300px" disabled="disabled" required>
+
+				{% for event in upcomingEvents %}
+
+ 			
+   				<option value="{{event.id}}">{{ event.title}} | {{event.start_date}}</option>
+   				
+				{% endfor %}
+ 			 </select>
+ 			 
+  			<br><br>
+  			<input type="submit" value="Update">
+			</form>
+			
+
+
+
+
+		</div>
+
+{% endblock %}
+</body>
+</html>

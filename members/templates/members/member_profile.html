@@ -4,21 +4,48 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="{% static 'members/preferences.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'members/profile.css' %}">
 </head>
 <body>
 {% block content %}
-	<div class="preference-form">
+	<div class="profile-form">
 		<div class="header">Member Profile:</div>
 			<h2><center>{{ member.first_name }} {{ member.last_name }}</center></h2>
-			<p>Nickname: {{ member.username }}</p>
-			<p>Email: {{ member.email }}</p>
-			<p>Birthday: {{ member.date_of_birth }}</p>
-			<p>Status: member</p>
-			<br>
-			<a href="{% url 'edit_preferences' %}">Edit Preferences</a><br>
-			<a href="{% url 'member_profile' %}">Edit Profile</a><br>
-			<a href="{% url 'delete_account' %}">Delete Account</a><br><br>
+			<!-- <p>Nickname: {{ member.username }}</p> -->
+			<div class="info">
+                <p>Email: {{ member.email }}</p>
+			    <p>Birthday: {{ member.date_of_birth }}</p>
+			
+                <p>Status:
+                {% if member.is_staff%}
+                    {% if member.is_superuser %}
+                    Superuser
+                    {% else %}
+                    Event Co-ordinator
+                    {% endif %}
+                {% else %}
+                    Member
+                {% endif %}
+
+                </p>
+            </div>
+            <div class="buttons">
+			{% if email_activated == 0 %}
+				<h4><center><font color="red">**Your account is not yet active**</font></center></h4> 
+				<center>Please click the link in your email activation to activate.</center>
+			{% else %}
+                    <div class="button-wrapper">
+                        <a href="{% url 'edit_preferences' %}">Edit Preferences</a>
+                    </div>
+                    <div class="button-wrapper">
+                        <a href="{% url 'member_profile' %}">Edit Profile</a>
+                    </div>
+                {% endif %}
+                    <div class="button-wrapper">
+                        <a href="{% url 'delete_account' %}">Delete Account</a>
+                    </div>
+            </div>
+    </div>
 {% endblock %}
 </body>
 </html>

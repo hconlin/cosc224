@@ -5,12 +5,12 @@ from events.models import Event
 import datetime
 from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
-
+DAYS = 2
 
 class Command(BaseCommand):
 	help = 'Send Event Reminders'
 	def handle(self, *args, **kwargs):
-		tomorrows_date =  datetime.date.today() + datetime.timedelta(days=1)
+		tomorrows_date =  datetime.date.today() + datetime.timedelta(days=DAYS)
 		print(tomorrows_date)
 		tomorrows_events = Event.objects.filter(start_date__contains=tomorrows_date)
 		print("working")
@@ -20,7 +20,8 @@ class Command(BaseCommand):
 			for user in prefered_by_users:
 				obj = Member.objects.get(pk=user.user_id)
 				print(obj.email)
-				send_the_mail(obj, event)
+				if user.email_activated == 1:
+					send_the_mail(obj, event)
 
 
 def send_the_mail(user, event):

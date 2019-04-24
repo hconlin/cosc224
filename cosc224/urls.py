@@ -19,7 +19,6 @@ from django.views.generic.base import TemplateView
 from events.views import home
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
     path('', include('members.urls')),
     path('', include('django.contrib.auth.urls')),
     path('events/', include('events.urls')),

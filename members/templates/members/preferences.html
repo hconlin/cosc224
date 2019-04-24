@@ -11,6 +11,7 @@
 {% block content %}
 <div class="preference-form">
     <div class="header">Select what interests you.</div>
+    <p> You will receive e-mails based on your preferences</p>
       <form action="" method="post">
         {% csrf_token %}
         {% for field in form %}

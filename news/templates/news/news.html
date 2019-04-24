@@ -5,6 +5,7 @@
 {% block content %}
   <div class="preference-form">
   <div class="header">Create News</div>
+  <p> All links must be in http format </p>
   <form method="post">
     {% csrf_token %}
    	{% for field in form %}

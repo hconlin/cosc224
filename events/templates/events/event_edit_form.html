@@ -1,6 +1,7 @@
 {% include 'base.html' %}
 
 {% block content %}
+  <p>All links must be in http format </p>
   <form action="" method="post">
     {% csrf_token %}
    	{% for field in form %}

@@ -189,7 +189,7 @@ def profile(request):
 	member = get_object_or_404(Member, pk=request.user.id)
 	return render(request, 'members/profile.html', {'member': member})
 
-
+#Used to activate emails, decodes a link and edits db
 def activate(request, uidb64, token):
 	try:
 		uid = force_text(urlsafe_base64_decode(uidb64))
@@ -204,7 +204,7 @@ def activate(request, uidb64, token):
 	else:
 		return render(request, 'email/confirmation.html', {'answer': 'Invalid link, please resend email INSERT BUTTON'})
 
-
+#Used to add second salt to password before attempting to log in
 def auth_view(request):
 	username = request.POST.get('username', '')
 	password = request.POST.get('password', '')
@@ -229,7 +229,7 @@ def auth_view(request):
 def gimme_salt():
 	return ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(N))
 
-
+#Used to chang users passwords.
 @login_required
 def change_password(request):
     user = request.user

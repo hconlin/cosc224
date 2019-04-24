@@ -1,7 +1,8 @@
 {% include 'base.html' %}
-
+ {% load static %}
 
 		{% block head %}
+                <link rel="stylesheet" type="text/css" href="{% static 'events/events.css' %}">
 		<title> {{ event.title }} </title>
 		{% endblock %}
 
@@ -45,9 +46,14 @@ Share on Twitter
 		<br />
 		<br />
   {% if user.is_staff %}
-  <a href="{% url 'edit_event' event.id %}">Edit Event</a>
-
-  <a href="{% url 'delete_event' event.id %}">delete</a>
+      <div class="buttons">
+				<div class="button-wrapper">
+					<a href="{% url 'edit_event' event.id %}">Edit Event</a>
+				</div>
+				<div class="button-wrapper">
+					<a href="{% url 'delete_event' event.id %}">Delete Event</a>
+				</div>
+            </div>
   {% endif %}
 
   </div>

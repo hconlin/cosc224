@@ -56,6 +56,7 @@ def event_edit(request, pk):
 		event.start_time = start_time
 		event.user_id = request.user.pk
 		event.save()
+		messages.add_message(request, messages.INFO, 'Successfully saved changes!', extra_tags='alert-success')
 		return HttpResponseRedirect('/events/' + str(event.id))
 	return render(request, 'events/event_edit_form.html', {'event': instance, 'form': form})
 

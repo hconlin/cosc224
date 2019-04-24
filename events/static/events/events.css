@@ -24,3 +24,64 @@
 .time-input{
     margin-bottom: 20px;
 }
+
+input[type='text'], input[type='number'], input[type='url'], input[type='email']{
+    width: 100%;
+}
+
+.form-button{
+    color: white;
+    height: 40px;
+    width: 150px;
+    border:none;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    background-color: #d41f55;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+.container{
+    width: 43.750em;
+    padding-right: 50px;
+    padding-left: 50px;
+    background-color: white;
+    border: solid 1px #dfe0e1;
+    margin: auto;
+    margin-top: 6.25em;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+    margin-bottom: 70px;
+    margin-top: 70px;
+}
+
+.button-wrapper{
+    display: inline-block;
+    text-align: center;
+    line-height: 40px;
+    color: white;
+    height: 40px;
+    width: 150px;
+    border:none;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    background-color: #d41f55;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.button-wrapper > a{
+    text-decoration: none;
+    color: white;
+}
+
+.buttons {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 10px;
+}

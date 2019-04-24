@@ -34,27 +34,6 @@ ul {
 		color: #999999;
 	}
 
-		@media screen and (max-width: 1680px) {
-
-			html {
-				font-size: 13pt;
-			}
-		}
-
-		@media screen and (max-width: 1280px) {
-
-			html {
-				font-size: 12pt;
-			}
-		}
-
-		@media screen and (max-width: 360px) {
-
-			html {
-				font-size: 11pt;
-			}
-		}
-
 		a:hover {
 			border-bottom-color: transparent !important;
 		}
@@ -277,13 +256,6 @@ ul {
 			display: block;
 			width: 4em;
 			margin: 2em auto 0 auto;
-		}
-
-		@media screen and (max-width: 736px) {
-
-			header.major {
-				margin: 0 0 2em 0;
-			}
 		}
 
 /* Spotlight */
@@ -690,8 +662,6 @@ ul {
 		}
 
 	}
-
-/* Main */
 
 /* Footer */
 

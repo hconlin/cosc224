@@ -13,10 +13,10 @@
 			<h2><center>{{ member.first_name }} {{ member.last_name }}</center></h2>
 			<!-- <p>Nickname: {{ member.username }}</p> -->
 			<div class="info">
-                <p>Email: {{ member.email }}</p>
-			    <p>Birthday: {{ member.date_of_birth }}</p>
+                <p><strong>Email:  &nbsp;</strong>{{ member.email }}</p>
+			    <p><strong>Birthday:  &nbsp;</strong>{{ member.date_of_birth }}</p>
 			
-                <p>Status:
+                <p><strong>Status:&nbsp;</strong>
                 {% if member.is_staff%}
                     {% if member.is_superuser %}
                     Superuser
@@ -34,16 +34,16 @@
 				<h4><center><font color="red">**Your account is not yet active**</font></center></h4> 
 				<center>Please click the link in your email activation to activate.</center>
 			{% else %}
-                    <div class="button-wrapper">
-                        <a href="{% url 'edit_preferences' %}">Edit Preferences</a>
-                    </div>
-                    <div class="button-wrapper">
-                        <a href="{% url 'member_profile' %}">Edit Profile</a>
-                    </div>
-                {% endif %}
-                    <div class="button-wrapper">
-                        <a href="{% url 'delete_account' %}">Delete Account</a>
-                    </div>
+				<div class="button-wrapper">
+					<a href="{% url 'edit_preferences' %}">Edit Preferences</a>
+				</div>
+				<div class="button-wrapper">
+					<a href="{% url 'member_profile' %}">Edit Profile</a>
+				</div>
+            {% endif %}
+				<div class="button-wrapper">
+					<a href="{% url 'delete_account' %}">Delete Account</a>
+				</div>
             </div>
     </div>
 {% endblock %}

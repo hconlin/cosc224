@@ -15,7 +15,13 @@
             {% if field.name == 'date_of_birth' %}
                 <div class="date-wrapper"><div class="label">Date of Birth</div>{{ field }}</div>
                     {% else %}
-                        {{ field }}
+						{% if field.name == 'first_name' %}
+							<strong>First Name: &nbsp;</strong>{{ field }}
+						{% elif field.name == 'last_name' %}
+							<strong>Last Name: &nbsp;</strong>{{ field }}
+						{% elif field.name == 'email' %}
+							<strong>Email: &nbsp;</strong>{{ field }}
+						{%  endif %}
                     {%  endif %}
           {% for error in field.errors %}
               <p style="color: red">{{ error }}</p>
@@ -32,7 +38,7 @@
 
 
       <div class="button-wrapper">
-        <input type="submit" value="Update Info", class="form-button">
+        <input type="submit" value="Update Profile", class="form-button">
       </div>
       </form>
     </div>

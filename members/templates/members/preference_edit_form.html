@@ -26,7 +26,7 @@
 {% endblock %}
 
 <script>
-   getPreferences("{{ event.start_time | safe }}")
+   getPreferences({{ preference | safe }})
 </script>
 </body>
 

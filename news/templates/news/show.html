@@ -11,9 +11,9 @@
 
 
   {% if user.is_staff %}
-  <a href="{% url 'edit_news' news.id %}">edit</a>
+  <a href="{% url 'edit_news' news.id %}">Edit</a>
 
-  <a href="{% url 'delete_news' news.id %}">delete</a>
+  <a href="{% url 'delete_news' news.id %}">Delete</a>
   {% endif %}
   </div>
                     

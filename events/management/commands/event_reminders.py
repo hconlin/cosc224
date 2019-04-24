@@ -11,15 +11,11 @@ class Command(BaseCommand):
 	help = 'Send Event Reminders'
 	def handle(self, *args, **kwargs):
 		tomorrows_date =  datetime.date.today() + datetime.timedelta(days=DAYS)
-		print(tomorrows_date)
 		tomorrows_events = Event.objects.filter(start_date__contains=tomorrows_date)
-		print("working")
-		print(tomorrows_events)
 		for event in tomorrows_events:
 			prefered_by_users = Preference.objects.filter(preferences__contains=event.category)
 			for user in prefered_by_users:
 				obj = Member.objects.get(pk=user.user_id)
-				print(obj.email)
 				if user.email_activated == 1:
 					send_the_mail(obj, event)
 

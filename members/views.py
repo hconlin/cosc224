@@ -209,9 +209,9 @@ def auth_view(request):
 	username = request.POST.get('username', '')
 	password = request.POST.get('password', '')
 	user = Member.objects.filter(email=username)
-	user_salt = user[0].user_salt
-	salted_pass = password+user_salt
 	if Member.objects.filter(email=username).exists():
+		user_salt = user[0].user_salt
+		salted_pass = password+user_salt
 		user = auth.authenticate(username=username, password=salted_pass)
 		if user is not None:
 			if user.is_active:

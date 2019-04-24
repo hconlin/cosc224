@@ -4,7 +4,7 @@
 {% block head %}
 <title> COSC CLUB </title>
 {% endblock %}
-
+<div style="margin-top: 70px">
 <main role="main" class="container">
   <div class="row">
     <div class="col-md">
@@ -12,6 +12,7 @@
       {% if events %}
       <p><img src="{{ event.image_link }}" onerror="this.onerror=null;this.src='http://www.rangerwoodperiyar.com/images/joomlart/demo/default.jpg';" alt="Event Image" height="250" width="250"></p>
       <!--<p><i>{{ events.start_date }}</i></p>-->
+      
       <h2><b><a href= "/events/{{ events.id }}" >{{ events.title }}</a></b></h2>
       <p>{{events.event_details }} </p>
 
@@ -20,7 +21,7 @@
       <br />
 
       {% else %}
-
+      </div>
       
       <img src="/static/images/logo2.png" width="250" height="250" align="left">
             <h1>Welcome To The <br>

@@ -52,7 +52,7 @@
 
 			<p><i> {{ event.start_date }}</i></p>
 			<h2>  <b>  {{ event.title }}</b></h2>
-			<p>  {{event.description }} </p>
+			<p>  {{event.description|truncatechars:80 }} </p>
 			</div>
 			</a>
 			

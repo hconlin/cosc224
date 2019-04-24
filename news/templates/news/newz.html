@@ -6,13 +6,18 @@
 <title> News </title>
 <style>
 .jumbotron{
-	background-color:#BFC1BD;
-	color:white;
+	background-color:#ffffff;
+	color:#212529;
 	padding-top:20px;
 	border: 2px;
-	border-color: #000;
+	border-color: #dfe0e1;
 	border-style: solid;
 }
+
+.jumbotron:hover{
+    border-color: #d41f55;
+}
+
 .jumbotron img{
 	display:block;
 	margin-right: 10px;
@@ -40,12 +45,12 @@
 			<!-- Iterates through the events -->
 			{% for news in news %}
 			<a href= "/news/{{ news.id }}" style="text-decoration: none;" class="btn-default btn-lg" role="button">
-			<div class="jumbotron">
+			<div class="jumbotron" id="tron">
 
 			<p><img src="{{ news.image_link }}" class="rounded float-left" alt="news Image" align="left" height="200" width="200"></p>
-			<!-- <p><i> {{ news.date }} </i></p> -->
+			<p><i> {{ news.date }} </i></p>
 			<h2><b>{{ news.title }}</b></h2>
-			<p>{{ news.body }}</p>
+			<p>{{ news.body|truncatechars:80 }}</p>
 			</div>
 			</a>
 

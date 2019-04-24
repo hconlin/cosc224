@@ -19,14 +19,14 @@
             {% endfor %}
         {% endfor %}
       <div class="button-wrapper">
-        <input type="submit" value="Update Preferences", class="form-button">
+        <input type="submit" align="center" style="width:200px" value="Update Preferences", class="form-button">
       </div>
       </form>
     </div>
 {% endblock %}
 
 <script>
-   getPreferences("{{ event.start_time | safe }}"")
+   getPreferences("{{ event.start_time | safe }}")
 </script>
 </body>
 

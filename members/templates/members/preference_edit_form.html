@@ -3,7 +3,7 @@
 <html>
 <head>
     <link rel="stylesheet" type="text/css" href="{% static 'members/preferences.css' %}">
-    <script src="{% static 'js/members.js' %}"></script>   
+    <script src="{% static 'js/members.js' %}"></script>
 </head>
 <body>
 {% block content %}
@@ -25,7 +25,7 @@
 {% endblock %}
 
 <script>
-   getPreferences({{ preference|safe }})
+   getPreferences("{{ event.start_time | safe }}"")
 </script>
 </body>
 

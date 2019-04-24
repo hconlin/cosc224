@@ -1,17 +1,23 @@
 {% include 'base.html' %}
  {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'members/preferences.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'events/events.css' %}">
 {% block content %}
 
-<div class="preference-form">
+<div class="event-form">
   <div class="header">Create Event</div>
   <form method="post">
     {% csrf_token %}
    	{% for field in form %}
-      <p>
-        {{ field.label_tag }}<br>
-        {{ field }}
-      </p>
+        {% if field.label == 'Hour' %}
+            Start time: {{ field }} :
+        {% elif field.label == 'Minute' or field.label == 'Meridiem'%}
+            {{ field }}
+        {% else %}
+          <p>
+            {{ field.label_tag }}<br>
+            {{ field }}
+          </p>
+        {% endif %}
       {% for error in field.errors %}
           <p style="color: red">{{ error }}</p>
         {% endfor %}

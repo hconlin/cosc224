@@ -18,8 +18,18 @@ def event_form(request):
 	if request.method == 'POST':
 		form = EventForm(request.POST)
 		if form.is_valid():
-			cd = form.cleaned_data
+			hour = form['hour'].value()
+			minute = form['minute'].value()
+			meridiem = form['meridiem'].value()
 			event = form.save(commit=False)
+			if meridiem == 'PM' and not int('0' + hour) == 12:
+				hour = int('0' + hour) + 12
+				hour = str(hour)
+			elif meridiem == 'AM' and int('0' + hour) == 12:
+				hour = int('0' + hour) - 12
+				hour = str(hour)
+			start_time = str(hour + ':' + minute + " " + meridiem)
+			event.start_time = start_time
 			event.user_id = request.user.pk
 			event.save()
 			messages.add_message(request, messages.INFO, 'Event successfully created!', extra_tags='alert-success')
@@ -28,19 +38,30 @@ def event_form(request):
 		form = EventForm()
 	return render(request, 'events/event.html', {'form': form})
 
+def event_edit(request, pk):
+	instance = Event.objects.get(pk=pk)
+	form = EventForm(request.POST or None, instance=instance)
+	if form.is_valid():
+		hour = form['hour'].value()
+		minute = form['minute'].value()
+		meridiem = form['meridiem'].value()
+		event = form.save(commit=False)
+		if meridiem == 'PM' and not int('0' + hour) == 12:
+			hour = int('0' + hour) + 12
+			hour = str(hour)
+		elif meridiem == 'AM' and int('0' + hour) == 12:
+			hour = int('0' + hour) - 12
+			hour = str(hour)
+		start_time = str(hour + ':' + minute + " " + meridiem)
+		event.start_time = start_time
+		event.user_id = request.user.pk
+		event.save()
+		return HttpResponseRedirect('/events/' + str(event.id))
+	return render(request, 'events/event_edit_form.html', {'event': instance, 'form': form})
+
 def show(request, event_id):
 	event = get_object_or_404(Event, pk=event_id)
 	return render(request, 'events/show.html',{'event': event})
-
-@method_decorator(staff_member_required, name='dispatch')
-class EditEvent(UpdateView):
-	model = Event
-	form_class = EventForm
-	template_name_suffix = '_edit_form'
-
-	def get_success_url(self):
-		messages.add_message(self.request, messages.INFO, 'Event successfully updated!', extra_tags='alert-success')
-		return reverse_lazy('show_event', kwargs={'event_id': self.object.pk})
 
 @staff_member_required
 def deleteEvent(request, event_id):

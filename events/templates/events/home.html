@@ -22,7 +22,7 @@
 
       {% if events %}
 
-      <p><img src="{{ events.image_link }}" onerror="this.onerror=null;this.src='http://www.rangerwoodperiyar.com/images/joomlart/demo/default.jpg';" alt="Event Image" height="250" width="250"></p>
+      <p><img src="{{ events.image_link }}" onerror="this.onerror=null;this.src='{% static 'images/logo.gif'%}';" alt="Event Image" height="250" width="250"></p>
       <!--<p><i>{{ events.start_date }}</i></p>-->
       
       {% if events.event_id is None %}

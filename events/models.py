@@ -21,6 +21,7 @@ class Event(models.Model):
 
 class HomePageEvent(models.Model):
 	user_id = models.IntegerField()
+	event_id = models.IntegerField(default=0)
 	title = models.CharField(max_length=200)
 	description = models.TextField(max_length = 2000)
 	start_time = models.TimeField()
@@ -29,8 +30,13 @@ class HomePageEvent(models.Model):
 	location = models.CharField(max_length=200)
 	location_details = models.TextField(max_length=2000)
 	cost = models.DecimalField(max_digits=8, decimal_places=2,null=True)
+<<<<<<< HEAD
 	age_requirement = models.IntegerField()
 	link = models.CharField(max_length=2000)
+=======
+	age_requirement = models.CharField(max_length=200)
+	link = models.CharField(max_length=200)
+>>>>>>> 8a63639c476126e60554fbe59fdf337426375805
 	category = models.CharField(max_length=200)
 	event_coordinator_name = models.CharField(max_length=200)
 	event_coordinator_email = models.EmailField()
@@ -39,6 +45,7 @@ class HomePageEvent(models.Model):
 	REQUIRED_FIELDS = ['title', 'start_date', 'end_date', 'age_requirement', 'category']
 
 	def update(self, newEvent):
+			self.event_id = newEvent.pk
 			self.user_id = newEvent.user_id
 			self.title = newEvent.title
 			self.description = newEvent.description

@@ -274,10 +274,25 @@ def settings(request):
 		'setEvent': eventPicked
 	}
 	
-	if request.method == 'POST': 
+	if request.method == 'POST' and 'updatehome' in request.POST: 
+		eventselected = request.POST.get('settings')
+
+		if 'updatehome' in request.POST:
+			if eventselected == 'upcoming' and eventPicked:
+				eventPicked.active = False
+				eventPicked.save()
+			elif eventselected == 'set':
+			
+				chosenEvent = request.POST.get('eventselect')
+			
+				if eventPicked:	
+					eventPicked.update(upcoming.get(pk=chosenEvent))
+			
+			messages.add_message(request, messages.INFO, 'Home Page Updated!', extra_tags='alert-success')
+	
+	elif request.method == 'POST':
 		selected = request.POST.get('userselect')
 		member = Member.objects.get(pk=selected)
-		eventselected = request.POST.get('settings')
 
 		if 'makeadmin' in request.POST:
 			member.is_superuser = 1
@@ -302,7 +317,7 @@ def settings(request):
 
 		if 'deleteuser'	in request.POST:
 			if member == request.user:
-				messages.add_message(request, messages.INFO, 'You cannot delete yourself from here, please visit your profile page!', extra_tags='alert-success')
+				messages.add_message(request, messages.INFO, 'You cannot delete yourself from here, please visit your profile page!', extra_tags='alert-danger')
 			else:
 				if member is not None:
 					user = get_object_or_404(Member, pk=selected)
@@ -312,17 +327,5 @@ def settings(request):
 					messages.add_message(request, messages.INFO, 'User successfully deleted!', extra_tags='alert-success')
 
 
-		if 'updatehome' in request.POST:
-			if eventselected == 'upcoming' and eventPicked:
-				eventPicked.active = False
-				eventPicked.save()
-			elif eventselected == 'set':
-			
-				chosenEvent = request.POST.get('eventselect')
-			
-				if eventPicked:	
-					eventPicked.update(upcoming.get(pk=chosenEvent))
-			
-			messages.add_message(request, messages.INFO, 'Home Page Updated!', extra_tags='alert-success')
-
+		
 	return render(request, 'members/adminpanel.html', context)

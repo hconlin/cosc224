@@ -46,6 +46,8 @@ def event_form(request):
 	return render(request, 'events/event.html', {'form': form})
 
 def event_edit(request, pk):
+	homepage = HomePageEvent.objects.first()
+
 	instance = Event.objects.get(pk=pk)
 	form = EventForm(request.POST or None, instance=instance)
 	if form.is_valid():
@@ -70,6 +72,11 @@ def event_edit(request, pk):
 		event.age_requirement = age_requirement
 		event.user_id = request.user.pk
 		event.save()
+		
+		if instance.pk == homepage.event_id:
+			homepage.update(instance)
+
+
 		messages.add_message(request, messages.INFO, 'Successfully saved changes!', extra_tags='alert-success')
 		return HttpResponseRedirect('/events/' + str(event.id))
 	return render(request, 'events/event_edit_form.html', {'event': instance, 'form': form})

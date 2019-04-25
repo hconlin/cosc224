@@ -124,6 +124,7 @@ def settings(request):
 	upcoming = Event.objects.filter(start_date__gte=now).order_by('-start_date')
 	eventPicked = HomePageEvent.objects.first()
 
+
 	context = {
 		'upcomingEvents': upcoming,
 		'setEvent': eventPicked
@@ -131,12 +132,12 @@ def settings(request):
 	
 
 	if request.method == 'POST':
-		selected = request.POST.get('settings')
+		eventselected = request.POST.get('settings')
 
-		if selected == 'upcoming' and eventPicked:
+		if eventselected == 'upcoming' and eventPicked:
 			eventPicked.active = False
 			eventPicked.save()
-		elif selected == 'set':
+		elif eventselected == 'set':
 			
 			chosenEvent = request.POST.get('eventselect')
 			
@@ -146,4 +147,4 @@ def settings(request):
 		messages.add_message(request, messages.INFO, 'Home Page Updated!', extra_tags='alert-success')
 
 
-	return render(request, 'events/set_home_event.html', context)
+	return render(request, 'adminpanel.html', context)

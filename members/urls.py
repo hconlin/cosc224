@@ -17,5 +17,6 @@ urlpatterns = [
         views.activate, name='activate'),
     path('auth/', views.auth_view, name='auth'),
     path('password/edit', views.change_password, name='change_password'),
-
+    path('settings', views.settings, name='settings'),
 ]
+

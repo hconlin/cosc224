@@ -1,0 +1,120 @@
+{% include 'base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'members/preferences.css' %}">
+</head>
+<body>
+{% block content %}
+	<div class="preference-form">
+		       <div class="header">Set HomePage:</div>
+   <form method="POST">
+            {% csrf_token %}
+            <input onclick="document.getElementById('eventselect').disabled = true;" type="radio" name="settings" value="upcoming" checked="checked"> <strong>Upcoming Event: </strong>Displays the next upcoming event<br><br>
+            
+            <input onclick="document.getElementById('eventselect').disabled = false;"
+            type="radio" name="settings" value="set"> <strong>Set Event: </strong>Displays a chosen event<br>
+            
+            <select name="eventselect" id="eventselect" size="5" style="min-width:300px" disabled="disabled" required>
+
+            {% for event in upcomingEvents %}
+               <option value="{{event.id}}">{{ event.title}} | {{event.start_date}}</option>
+               
+            {% endfor %}
+          </select>
+          
+         <br><br>
+         <input type="submit" name ="updatehome" value="Update Homepage" class="btn btn-info ">
+         </form>
+         <br>
+         <hr>
+         <br>
+
+      <div class="header">Manage Users:</div>
+			
+
+
+
+			<form name="users" method="POST">
+				{% csrf_token %}
+				<strong>Select User: </strong>
+   				 <select id="userselect" name="userselect" size="1">
+   				 	<br><br>
+		 
+				{% for user in userlist %}
+
+					  <option value="{{user.id}}">{{ user.first_name }} {{ user.last_name}}</option> 
+
+				{% endfor %}
+				</select> 
+				<br><br>
+				<table>
+             <tr>
+               <td><input type="submit" name="makeadmin" value="Make Admin" class="btn btn-info " style="width:100%"></td>
+				   <td><input type="submit" name="removeadmin" value="Remove Admin" class="btn btn-warning " style="width:100%"></td>
+            </tr>
+				<tr>
+               <td><input type="submit" name="makecoord" value="Make Co-ordinator" class="btn btn-info " style="width:100%"></td>
+				   <td><input type="submit" name="removecoord" value="Remove Co-ordinator" class="btn btn-warning " style="width:100%"></td>
+            </tr>
+            <tr>
+               <td><input type="submit" name="deleteuser" value="Delete User" onclick="return clicked(this.form);" class="btn btn-danger" style="width:100%"></td>
+               <td></td>
+            </tr>
+         </table>
+		
+   			</form>
+
+
+   			<br>
+
+   			{% csrf_token %}
+   				<table style="width: 100%">
+   					<tr>
+   						<th>First Name</th>
+   						<th>Last Name</th>
+   						<th>Email</th>
+   						<th>Admin</th>
+   						<th>Co-ordinator</th>
+   					</tr>
+   				{% for user in userlist %}
+   					<tr>
+   						<td>{{ user.first_name }}</td>
+   						<td> {{ user.last_name}}</td>
+   						<td> {{ user.email }} </td>
+   				{% if user.is_superuser %} 
+   						<td>Yes</td>
+   				{% else %}
+   						<td></td>
+   				{% endif %}
+
+   				{% if user.is_staff %}
+   					<td>Yes</td>
+   				{% else %}
+   					<td></td>
+   				{% endif %}
+   					</tr>
+   			
+   				{% endfor %}
+
+   			</table>
+            <br>
+            <br>
+
+		</div>
+
+{% endblock %}
+</body>
+<script type="text/javascript">
+    function clicked(form) {
+       if (confirm('Do you really to delete this user? This action cannot be undone.')) {
+           form.submit();
+       } else {
+           return false;
+       }
+    }
+
+</script>
+</html>

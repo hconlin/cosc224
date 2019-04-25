@@ -24,6 +24,8 @@ import string
 import random
 from django.contrib.auth.hashers import make_password
 import json
+from django.utils import timezone
+from events.models import Event, HomePageEvent
 
 N = 32
 
@@ -257,3 +259,70 @@ def change_password(request):
         'form': form
     })
 
+@login_required(login_url='/login')
+def settings(request):
+	users = Member.objects.all().exclude(id=1).order_by('first_name')
+	now = timezone.now()
+	upcoming = Event.objects.filter(start_date__gte=now).order_by('-start_date')
+	eventPicked = HomePageEvent.objects.first()
+
+
+
+	context = {
+		'userlist': users,
+		'upcomingEvents': upcoming,
+		'setEvent': eventPicked
+	}
+	
+	if request.method == 'POST': 
+		selected = request.POST.get('userselect')
+		member = Member.objects.get(pk=selected)
+		eventselected = request.POST.get('settings')
+
+		if 'makeadmin' in request.POST:
+			member.is_superuser = 1
+			member.save()
+			messages.add_message(request, messages.INFO, 'Made Admin!', extra_tags='alert-success')
+
+		if 'removeadmin' in request.POST:
+			member.is_superuser = 0
+			member.save()
+			messages.add_message(request, messages.INFO, 'Removed Admin!', extra_tags='alert-success')
+
+		if 'makecoord' in request.POST:
+			member.is_staff = 1
+			member.save()
+			messages.add_message(request, messages.INFO, 'Made Co-ordinator!', extra_tags='alert-success')
+
+		if 'removecoord' in request.POST:
+			member.is_staff = 0
+			member.save()
+			messages.add_message(request, messages.INFO, 'Removed Co-ordinator!', extra_tags='alert-success')
+
+
+		if 'deleteuser'	in request.POST:
+			if member == request.user:
+				messages.add_message(request, messages.INFO, 'You cannot delete yourself from here, please visit your profile page!', extra_tags='alert-success')
+			else:
+				if member is not None:
+					user = get_object_or_404(Member, pk=selected)
+					preference = get_object_or_404(Preference, user_id=selected)
+					user.delete()
+					preference.delete()
+					messages.add_message(request, messages.INFO, 'User successfully deleted!', extra_tags='alert-success')
+
+
+		if 'updatehome' in request.POST:
+			if eventselected == 'upcoming' and eventPicked:
+				eventPicked.active = False
+				eventPicked.save()
+			elif eventselected == 'set':
+			
+				chosenEvent = request.POST.get('eventselect')
+			
+				if eventPicked:	
+					eventPicked.update(upcoming.get(pk=chosenEvent))
+			
+			messages.add_message(request, messages.INFO, 'Home Page Updated!', extra_tags='alert-success')
+
+	return render(request, 'members/adminpanel.html', context)

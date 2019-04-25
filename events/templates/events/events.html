@@ -1,5 +1,5 @@
 {% include "base.html" %}
-
+{% load static %} 
 {% block content %}
 {% block head %}
 <title> Events </title>
@@ -48,7 +48,7 @@
 
 			<a href= "/events/{{ event.id }}" style="text-decoration: none;" class="btn-default btn-lg" role="button">
 			<div class="jumbotron" id="tron">
-			<p><img src="{{ event.image_link }}" onerror="this.onerror=null;this.src='http://www.rangerwoodperiyar.com/images/joomlart/demo/default.jpg';" class="rounded float-left" align="left" alt="Event Image" height="200" width="200"></p>
+			<p><img src="{{ event.image_link }}" onerror="this.onerror=null;this.src='{% static 'images/logo.gif'%}';" class="rounded float-left" align="left" alt="Event Image" height="200" width="200"></p>
 
 			<p><i> {{ event.start_date }}</i></p>
 			<h2>  <b>  {{ event.title }}</b></h2>

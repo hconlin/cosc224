@@ -9,6 +9,7 @@
 	background-color:#ffffff;
 	color:#212529;
 	padding-top:20px;
+	padding-bottom:80px;
 	border: 2px;
 	border-color: #dfe0e1;
 	border-style: solid;
@@ -27,6 +28,14 @@
 .h2{
 	margin-top:10px;
 }
+.a {
+    text-decoration: none; 
+    color: black; 
+}
+.p {
+    text-decoration: none; 
+    color: black; 
+}
 </style>
 {% endblock %}
 
@@ -44,15 +53,16 @@
 
 			<!-- Iterates through the events -->
 			{% for news in news %}
-			<a href= "/news/{{ news.id }}" style="text-decoration: none;" class="btn-default btn-lg" role="button">
-			<div class="jumbotron" id="tron">
+			
+			<div class="jumbotron" id="tron" style="cursor: pointer;" onclick="window.location='/news/{{ news.id }}';">
 
 			<p><img src="{{ news.image_link }}" class="rounded float-left" alt="news Image" align="left" height="200" width="200"></p>
 			<p><i> {{ news.date }} </i></p>
 			<h2><b>{{ news.title }}</b></h2>
 			<p>{{ news.body|truncatechars:80 }}</p>
+			
 			</div>
-			</a>
+			
 
 			
 			{% empty %}

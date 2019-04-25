@@ -14,7 +14,7 @@
     background-color: white;
     border: solid 1px #dfe0e1;
     margin: auto;
-    margin-top: 6.25em;
+    margin-top: 70px;
     -webkit-border-radius: 15px;
     -moz-border-radius: 15px;
     border-radius: 15px;
@@ -75,7 +75,7 @@ input[type='text'], input[type='number'], input[type='url'], input[type='email']
     margin-right: 5px;
 }
 
-select{
+select {
     height: 30px;
 }
 

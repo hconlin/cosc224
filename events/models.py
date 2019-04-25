@@ -12,11 +12,11 @@ class Event(models.Model):
 	location_details = models.TextField(max_length=2000)
 	cost = models.DecimalField(max_digits=8, decimal_places=2, null=True)
 	age_requirement = models.CharField(max_length=200)
-	link = models.CharField(max_length=200)
+	link = models.CharField(max_length=2000)
 	category = models.CharField(max_length=200)
 	event_coordinator_name = models.CharField(max_length=200)
 	event_coordinator_email = models.EmailField()
-	image_link = models.CharField(max_length=200)
+	image_link = models.CharField(max_length=2000)
 	REQUIRED_FIELDS = ['title', 'start_date', 'end_date', 'age_requirement', 'category']
 
 class HomePageEvent(models.Model):
@@ -30,11 +30,11 @@ class HomePageEvent(models.Model):
 	location_details = models.TextField(max_length=2000)
 	cost = models.DecimalField(max_digits=8, decimal_places=2,null=True)
 	age_requirement = models.IntegerField()
-	link = models.CharField(max_length=200)
+	link = models.CharField(max_length=2000)
 	category = models.CharField(max_length=200)
 	event_coordinator_name = models.CharField(max_length=200)
 	event_coordinator_email = models.EmailField()
-	image_link = models.CharField(max_length=200)
+	image_link = models.CharField(max_length=2000)
 	active = models.BooleanField(default=False)
 	REQUIRED_FIELDS = ['title', 'start_date', 'end_date', 'age_requirement', 'category']
 

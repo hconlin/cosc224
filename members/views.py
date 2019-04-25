@@ -317,7 +317,7 @@ def settings(request):
 
 		if 'deleteuser'	in request.POST:
 			if member == request.user:
-				messages.add_message(request, messages.INFO, 'You cannot delete yourself from here, please visit your profile page!', extra_tags='alert-success')
+				messages.add_message(request, messages.INFO, 'You cannot delete yourself from here, please visit your profile page!', extra_tags='alert-danger')
 			else:
 				if member is not None:
 					user = get_object_or_404(Member, pk=selected)

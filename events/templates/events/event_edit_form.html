@@ -8,7 +8,6 @@
     <div class="event-form">
         <div class="header">Edit Event</div>
           <form action="" method="post">
-            <p>All links must be in http format </p>
             {% csrf_token %}
             {% for field in form %}
                 {% if field.label == 'Hour' %}

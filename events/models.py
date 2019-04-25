@@ -30,13 +30,8 @@ class HomePageEvent(models.Model):
 	location = models.CharField(max_length=200)
 	location_details = models.TextField(max_length=2000)
 	cost = models.DecimalField(max_digits=8, decimal_places=2,null=True)
-<<<<<<< HEAD
-	age_requirement = models.IntegerField()
-	link = models.CharField(max_length=2000)
-=======
 	age_requirement = models.CharField(max_length=200)
-	link = models.CharField(max_length=200)
->>>>>>> 8a63639c476126e60554fbe59fdf337426375805
+	link = models.CharField(max_length=2000)
 	category = models.CharField(max_length=200)
 	event_coordinator_name = models.CharField(max_length=200)
 	event_coordinator_email = models.EmailField()

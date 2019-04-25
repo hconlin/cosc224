@@ -89,6 +89,9 @@ def show(request, event_id):
 def deleteEvent(request, event_id):
     event = get_object_or_404(Event, pk=event_id)
     event.delete()
+    homepage = HomePageEvent.objects.first()
+    homepage.active = 0
+    homepage.save()
     messages.add_message(request, messages.INFO, 'Event successfully deleted!', extra_tags='alert-success')
     return HttpResponseRedirect('/')
 

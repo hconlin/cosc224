@@ -3,6 +3,17 @@
 {% block content %}
 {% block head %}
 <title> COSC CLUB </title>
+<style>
+.centered {
+  position: absolute;
+  color: #d41f55;
+  top: 50%;
+  left: 50%;
+  font-size: 43px;
+  transform: translate(-50%, -50%);
+  text-shadow: 2px 2px 5px black;
+  }
+</style>
 {% endblock %}
 <div style="margin-top: 70px">
 <main role="main" class="container">
@@ -43,19 +54,22 @@
 
     <div class="col-sm-4">
       <div class="imglink">
-        <a href= "{% url 'events' %}"> <img src="{% static 'images/event-photo.jpg' %}" class="img-responsive" style="width:100%; border-radius: 25px;" alt="Image"></a>
+        <a href= "{% url 'events' %}"> <img src="{% static 'images/event-photo2.jpg' %}" class="img-responsive" style="width:100%; border-radius: 25px;" alt="Image">
+        <div class="centered"><b>EVENTS</b></div></a>
        </div>
     
     </div>
 
     <div class="col-sm-4"> 
       <div class="imglink">
-      <a href="{% url 'news' %}"><img src="{% static 'images/news-photo.jpg' %}" class="img-responsive" style="width:100%; border-radius: 25px;" alt="Image"></a>
+      <a href="{% url 'news' %}"><img src="{% static 'images/news-photo.jpg' %}" class="img-responsive" style="width:100%; border-radius: 25px;" alt="Image">
+      <div class="centered"><b>NEWS</b></div></a>
       </div>
     </div>
     <div class="col-sm-4"> 
       <div class="imglink">
-        <a href="{% url 'about_us' %}"><img src="{% static 'images/aboutus-photo.jpg' %}" class="img-responsive" style="width:100%; border-radius: 25px;" alt="Image"></a>
+        <a href="{% url 'about_us' %}"><img src="{% static 'images/aboutus-photo.jpg' %}" class="img-responsive" style="width:100%; border-radius: 25px;" alt="Image">
+        <div class="centered"><b>ABOUT US</b></div></a>
       </div> 
     </div>
   </div>

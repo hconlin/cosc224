@@ -18,6 +18,9 @@
                 {% elif field.label == 'Age Requirement'%}
                     {{ field.label_tag }}<br>
                     {{ field }}<div class="append-age" style="display: inline"></div>
+                {% elif field.label == 'Image Link'%}
+                    Image Link (<span style="font-style: italic;">All links must be in http format</span>): <br>
+                {{ field }}
                 {% else %}
                   <p>
                     {{ field.label_tag }}<br>

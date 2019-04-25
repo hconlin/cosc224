@@ -24,7 +24,11 @@
       <p><img src="{{ event.image_link }}" onerror="this.onerror=null;this.src='http://www.rangerwoodperiyar.com/images/joomlart/demo/default.jpg';" alt="Event Image" height="250" width="250"></p>
       <!--<p><i>{{ events.start_date }}</i></p>-->
       
-      <h2><b><a href= "/events/{{ events.id }}" >{{ events.title }}</a></b></h2>
+      {% if events.event_id is None %}
+         <h2><b><a href= "/events/{{ events.id }}" >{{ events.title }}</a></b></h2>
+      {% else %}
+         <h2><b><a href= "/events/{{ events.event_id }}" >{{ events.title }}</a></b></h2>
+      {% endif %} 
       <p>{{events.event_details }} </p>
 
       <br />

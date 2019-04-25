@@ -28,9 +28,9 @@ def event_form(request):
 				hour = int('0' + hour) - 12
 				hour = str(hour)
 			age_requirement = form['age_requirement'].value()
-			age = form['id_age'].value()
+			age = form['age'].value()
 			if age_requirement == 'Must be older than' or age_requirement == 'Must be younger than':
-				age_requirement = str(age_requirement + " " + str(age) + " years old")
+				age_requirement = str(age_requirement + " " + str(age) + " year(s) old")
 			else:
 				age_requirement = str(age_requirement)
 			event = form.save(commit=False)
@@ -61,7 +61,7 @@ def event_edit(request, pk):
 		age_requirement = form['age_requirement'].value()
 		age = form['age'].value()
 		if age_requirement == 'Must be older than' or age_requirement == 'Must be younger than':
-			age_requirement = str(age_requirement + " " + str(age) + " years old")
+			age_requirement = str(age_requirement + " " + str(age) + " year(s) old")
 		else:
 			age_requirement = str(age_requirement)
 		event = form.save(commit=False)

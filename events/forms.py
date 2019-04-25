@@ -13,6 +13,8 @@ class EventForm(forms.ModelForm):
 
 	MERIDIEMS = [('AM', 'AM'), ('PM', 'PM')]
 
+	AGE_REQS = [('None', 'None'), ('Must be older than', 'Must be older than'), ('Must be younger than', 'Must be younger than')]
+
 	title = forms.CharField(label='Title')
 	description = forms.CharField(label='Description', widget=forms.Textarea)
 	hour = forms.CharField(label='Hour', widget=forms.Select(choices=HOURS, attrs={'class': 'time-input'}))
@@ -23,7 +25,8 @@ class EventForm(forms.ModelForm):
 	location = forms.CharField(label='Location Address', required=False)
 	location_details = forms.CharField(label='Location Details', widget=forms.Textarea, required=False)
 	cost = forms.DecimalField(label='Cost', required=False)
-	age_requirement = forms.IntegerField(label='Age Requirement')
+	age_requirement = forms.CharField(label='Age Requirement', widget=forms.Select(choices=AGE_REQS, attrs={'class': 'age-requirement'}))
+	age = forms.CharField(widget=forms.HiddenInput(), label='', required=False)
 	link = forms.URLField(label='Event Link', required=False)
 	category = forms.CharField(label='Category', widget=forms.Select(choices=EVENT_TYPE),required=False)
 	event_coordinator_name = forms.CharField(label='Contact Name', required=False)
@@ -33,7 +36,7 @@ class EventForm(forms.ModelForm):
 	class Meta:
 		model = Event
 		fields = ['title', 'description', 'hour', 'minute', 'meridiem', 'start_date', 'end_date', 'location', 'location_details',
-				  'cost', 'age_requirement', 'link', 'category', 'event_coordinator_name',
+				  'cost', 'age_requirement', 'age','link', 'category', 'event_coordinator_name',
 				  'event_coordinator_email', 'image_link']
 
 	def clean(self):

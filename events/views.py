@@ -21,15 +21,22 @@ def event_form(request):
 			hour = form['hour'].value()
 			minute = form['minute'].value()
 			meridiem = form['meridiem'].value()
-			event = form.save(commit=False)
 			if meridiem == 'PM' and not int('0' + hour) == 12:
 				hour = int('0' + hour) + 12
 				hour = str(hour)
 			elif meridiem == 'AM' and int('0' + hour) == 12:
 				hour = int('0' + hour) - 12
 				hour = str(hour)
+			age_requirement = form['age_requirement'].value()
+			age = form['id_age'].value()
+			if age_requirement == 'Must be older than' or age_requirement == 'Must be younger than':
+				age_requirement = str(age_requirement + " " + str(age) + " years old")
+			else:
+				age_requirement = str(age_requirement)
+			event = form.save(commit=False)
 			start_time = str(hour + ':' + minute + " " + meridiem)
 			event.start_time = start_time
+			event.age_requirement = age_requirement
 			event.user_id = request.user.pk
 			event.save()
 			messages.add_message(request, messages.INFO, 'Event successfully created!', extra_tags='alert-success')
@@ -45,15 +52,22 @@ def event_edit(request, pk):
 		hour = form['hour'].value()
 		minute = form['minute'].value()
 		meridiem = form['meridiem'].value()
-		event = form.save(commit=False)
 		if meridiem == 'PM' and not int('0' + hour) == 12:
 			hour = int('0' + hour) + 12
 			hour = str(hour)
 		elif meridiem == 'AM' and int('0' + hour) == 12:
 			hour = int('0' + hour) - 12
 			hour = str(hour)
+		age_requirement = form['age_requirement'].value()
+		age = form['age'].value()
+		if age_requirement == 'Must be older than' or age_requirement == 'Must be younger than':
+			age_requirement = str(age_requirement + " " + str(age) + " years old")
+		else:
+			age_requirement = str(age_requirement)
+		event = form.save(commit=False)
 		start_time = str(hour + ':' + minute + " " + meridiem)
 		event.start_time = start_time
+		event.age_requirement = age_requirement
 		event.user_id = request.user.pk
 		event.save()
 		messages.add_message(request, messages.INFO, 'Successfully saved changes!', extra_tags='alert-success')

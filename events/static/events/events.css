@@ -75,6 +75,10 @@ input[type='text'], input[type='number'], input[type='url'], input[type='email']
     margin-right: 5px;
 }
 
+select{
+    height: 30px;
+}
+
 .button-wrapper > a{
     text-decoration: none;
     color: white;

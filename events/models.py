@@ -11,7 +11,7 @@ class Event(models.Model):
 	location = models.CharField(max_length=200)
 	location_details = models.TextField(max_length=2000)
 	cost = models.DecimalField(max_digits=8, decimal_places=2, null=True)
-	age_requirement = models.IntegerField()
+	age_requirement = models.CharField(max_length=200)
 	link = models.CharField(max_length=200)
 	category = models.CharField(max_length=200)
 	event_coordinator_name = models.CharField(max_length=200)

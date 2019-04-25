@@ -1,6 +1,7 @@
 {% include 'base.html' %}
  {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'events/events.css' %}">
+    <script src="{% static 'js/age.js' %}"></script>
 {% block content %}
 
 <div class="event-form">
@@ -13,6 +14,9 @@
             Start time: {{ field }} :
         {% elif field.label == 'Minute' or field.label == 'Meridiem'%}
             {{ field }}
+        {% elif field.label == 'Age Requirement'%}
+            {{ field.label_tag }}<br>
+            {{ field }}<div class="append-age" style="display: inline"></div>
         {% else %}
           <p>
             {{ field.label_tag }}<br>
@@ -27,3 +31,7 @@
   </form>
 </div>
 {% endblock %}
+
+<script>
+    ageReq()
+</script>

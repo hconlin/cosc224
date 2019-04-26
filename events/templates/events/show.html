@@ -4,32 +4,94 @@
 		{% block head %}
                 <link rel="stylesheet" type="text/css" href="{% static 'events/events.css' %}">
 		<title> {{ event.title }} </title>
+
+    <style>
+      .one{
+        width:20%;
+        float: left;
+        margin: 5%;
+      }
+      .two{
+        width: 20%;
+        margin: 5%;
+        float:left; 
+      }
+      .three{
+        width: 20%;
+        margin: 5%;
+        float:left; 
+      }
+    </style>
 		{% endblock %}
 
 
  <main role="main" class="container">
                 <div class="row">
-                    <div class="col-md">
+                    <div class="col-lg">
 {% block content %}
 
 
   <br />
-  <h2>Title: <b>{{ event.title }}</b></h2>
+  <center><h1><b>{{ event.title }}</b></h1></center>
   <hr class="my-4">
-  <p><b>Start Time: </b>{{ event.start_time }}</p>
-  <p><b>Start Date: </b>{{ event.start_date }}</p>
-  <p><b>End Date: </b>{{ event.end_date }}</p>
-  <p><b>Event Details</b> {{ event.event_details }} </p>
-  <p><b>Location: </b>{{ event.location }}</p>
-  <p><b>Location Details: </b>{{ event.location_details }}</p>
-  <p><b>Cost:</b> {{ event.cost }}</p>
-  <p><b>Age Requirement: </b>{{ event.age_requirement }}</p>
-  <p><b>Event Page Link:</b> <a href="{{ event.link }}" target="_blank"> {{ event.link }}</a></p>
-  <p><b>Categories:</b> {{ event.category }}</p>
-  <p><b>Contact Name:</b> {{ event.event_coordinator_name }}</p>
-  <p><b>Contact Email:</b> {{ event.event_coordinator_email }}</p>
-  <p><b>Image: </b> <img src="{{ event.image_link }}" onerror="this.onerror=null;this.src='http://www.rangerwoodperiyar.com/images/joomlart/demo/default.jpg';" alt="Event Image" height="250" width="250"></p>
+  <center>
+  <div class="one">
+  {% if event.start_time%}
+  <p><b>Start Time: <br><hr></b>{{ event.start_time }}</p>
+  {% endif %}
+  {%if event.start_date%}
+  <p><b>Start Date: <br><hr></b>{{ event.start_date }}</p>
+  {%endif%}
+  {%if event.end_date%}
+  <p><b>End Date: <br><hr></b>{{ event.end_date }}</p>
+  {%endif%}
+  {%if event.event_details%}
+  <p><b>Event Details <br><hr></b> {{ event.event_details }} </p>
+  {%endif%}
+  {%if event.location%}
+  <p><b>Location: <br><hr></b>{{ event.location }}</p>
+  {%endif%}
+  </div>
+  <div class="two">
+  {%if event.location_details%}
+  <p><b>Location Details: <br><hr></b>{{ event.location_details }}</p>
+  {%endif%}
+  {%if event.cost%}
+  <p><b>Cost: <br><hr></b> {{ event.cost }}</p>
+  {%endif%}
+  {%if event.age_requirement%}
+  <p><b>Age Requirement: <br><hr></b>{{ event.age_requirement }}</p>
+  {%endif%}
+  {%if event.link%}
+  <p><b>Event Page Link: <br><hr></b> <a href="{{ event.link }}" target="_blank"> {{ event.link }}</a></p>
+{%endif%}
+  {% if event.category %}
+  <p><b>Categories: <br><hr></b> {{ event.category }}</p>
+  {% endif %}
+  {% if event.event_coordinator_name %}
+  <p><b>Contact Name: <br><hr></b> {{ event.event_coordinator_name }}</p>
+  {% endif %}
+  {% if event.event_coordinator_email %}
+  <p><b>Contact Email: <br><hr></b> {{ event.event_coordinator_email }}</p>
+  {%endif%}
+  </div>
+<div class="three">
+  <p><img src="{{ event.image_link }}" onerror="this.onerror=null;this.src='http://www.rangerwoodperiyar.com/images/joomlart/demo/default.jpg';" alt="Event Image" height="250" width="250"></p>
   <br />
+</div>
+
+</center>
+		
+		<br />
+		<br />
+		<br />
+
+
+  </div>
+                    
+                </div>
+            </main>
+            <div class="buttons">
 <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}">
 <button type="button" class="btn btn-primary btn-lg" aria-pressed="true">
 Share on Facebook
@@ -40,24 +102,15 @@ Share on Facebook
 Share on Twitter
 </button>
 </a>
-
-		
-		<br />
-		<br />
-		<br />
-  {% if user.is_superuser or user.is_staff and event.user_id == user.id %}
+</div>
+              {% if user.is_superuser or user.is_staff and event.user_id == user.id %}
       <div class="buttons">
-				<div class="button-wrapper">
-					<a href="{% url 'edit_event' event.id %}">Edit Event</a>
-				</div>
-				<div class="button-wrapper">
-					<a href="{% url 'delete_event' event.id %}">Delete Event</a>
-				</div>
+        <div class="button-wrapper">
+          <a href="{% url 'edit_event' event.id %}">Edit Event</a>
+        </div>
+        <div class="button-wrapper">
+          <a href="{% url 'delete_event' event.id %}">Delete Event</a>
+        </div>
             </div>
   {% endif %}
-
-  </div>
-                    
-                </div>
-            </main>
 {% endblock %}

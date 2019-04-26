@@ -1,5 +1,6 @@
 from django import forms
 from events.models import Event
+from datetime import datetime
 
 class EventForm(forms.ModelForm):
 
@@ -20,8 +21,8 @@ class EventForm(forms.ModelForm):
 	hour = forms.CharField(label='Hour', widget=forms.Select(choices=HOURS, attrs={'class': 'time-input'}))
 	minute = forms.CharField(label='Minute', widget=forms.Select(choices=MINUTES, attrs={'class': 'time-input'}))
 	meridiem = forms.CharField(label='Meridiem', widget=forms.Select(choices=MERIDIEMS, attrs={'class': 'time-input'}))
-	start_date = forms.DateField(label='Start Date', widget=forms.SelectDateWidget)
-	end_date = forms.DateField(label='End Date', widget=forms.SelectDateWidget)
+	start_date = forms.DateField(label='Start Date', widget=forms.SelectDateWidget(years=range(datetime.now().year - 20, datetime.now().year + 20)))
+	end_date = forms.DateField(label='End Date', widget=forms.SelectDateWidget(years=range(datetime.now().year - 20, datetime.now().year + 20)))
 	location = forms.CharField(label='Location Address', required=False)
 	location_details = forms.CharField(label='Location Details', widget=forms.Textarea, required=False)
 	cost = forms.DecimalField(label='Cost', required=False)

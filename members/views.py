@@ -92,7 +92,7 @@ def preference_selection(request):
 				preference.user_id = request.user.id
 				preference.save()
 				messages.add_message(request, messages.INFO,
-									 'Welcome and thanks for joining the Okanagan Collage Computer Science Club',
+									 'Welcome and thanks for joining the Okanagan College Computer Science Club',
 									 extra_tags='alert-success')
 				return redirect('/')
 		else:

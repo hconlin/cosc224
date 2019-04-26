@@ -104,7 +104,23 @@
             <br>
 
 		</div>
-
+{% for message in messages %}
+        {% if message.tags == 'alert-danger info' %}
+        <div class="alert {{ message.tags }} alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+            {{ message }}
+      <script>
+            $(document).ready(function(){
+                setTimeout(function(){
+                    $(".alert").fadeOut("slow");
+                }, 3000);   
+            })
+      </script>
+        </div>
+        {% endif %}
+    {% endfor %}
 {% endblock %}
 </body>
 <script type="text/javascript">
@@ -115,6 +131,9 @@
            return false;
        }
     }
+
+
+
 
 </script>
 </html>

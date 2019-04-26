@@ -60,7 +60,7 @@ p{
 			
 			<div class="jumbotron" id="tron" style="cursor: pointer;" onclick="window.location='/news/{{ news.id }}';">
 
-			<p><img src="{{ news.image_link }}" class="rounded float-left" alt="news Image" align="left" height="200" width="200"></p>
+			<p><img src="{{ news.image_link }}" onerror="this.onerror=null;this.src='{% static 'images/logo.gif'%}';" class="rounded float-left" alt="news Image" align="left" height="200" width="200"></p>
 			<p><i> {{ news.date }} </i></p>
 			<h2><b>{{ news.title }}</b></h2>
 			<p>{{ news.body|truncatechars:400 }}</p>

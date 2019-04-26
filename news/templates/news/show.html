@@ -94,7 +94,7 @@ body{
             <hr class="my-4">
             <div>
             {%if news.image_link%}
-            <img src='{{ news.image_link }}' class="img">
+            <img src='{{ news.image_link }}' class="img"onerror="this.onerror=null;this.src='{% static 'images/logo.gif'%}';" alt="Event Image" class="img">
             {% endif %}
             </div>
             <div>

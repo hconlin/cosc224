@@ -46,8 +46,8 @@ class Member(AbstractUser):
 
 class Preference(models.Model):
 	user = models.ForeignKey(Member, on_delete=models.CASCADE)
-	preferences = models.CharField(max_length=500)
-	REQUIRED_FIELDS = ['preferences']
+	preferences = models.CharField(max_length=500, blank=True, null=True)
+	
 
 	def __str__(self):
 		return u"%s" % (self.preferences)

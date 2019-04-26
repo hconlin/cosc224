@@ -31,7 +31,7 @@ class LoginForm(AuthenticationForm):
 class PreferenceForm(forms.ModelForm):
 	PREFERENCES = (('game competitions', 'Game Competitions'),('software competitions', 'Software Competitions'),('meet and greets', 'Meet & Greets'),('seminars', 'Seminars'),
 					('social networking','Social Networking'), ('job fairs', 'Job Fairs'))
-	preferences = forms.MultipleChoiceField(choices=PREFERENCES, widget=forms.CheckboxSelectMultiple(attrs={'class':'checkmark'}))
+	preferences = forms.MultipleChoiceField(choices=PREFERENCES, widget=forms.CheckboxSelectMultiple(attrs={'class':'checkmark'}), required=False)
 
 	class Meta:
 		model = Preference

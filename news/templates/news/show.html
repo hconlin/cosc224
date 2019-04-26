@@ -72,6 +72,14 @@ body{
    width:1000px;            /* As IE6 ignores !important it will set width as 1000px; */
 }
 
+.img{
+  float: left;
+  margin-right: 15px;
+  height: 250px;
+  max-width: 325px;
+  border-radius: 4px;
+}
+
 </style>
 {% endblock %}
 
@@ -79,17 +87,20 @@ body{
  <main role="main" class="container">
     <div class="row">
         <div class="col-md">
-            <center><h1>{{ news.title }}</h1></center>
+         
+
+            <center><h1 class="header">{{ news.title }}</h1></center>
             <hr class="my-4">
-            <div class="one">
+            <div>
             {%if news.image_link%}
-            <img src='{{ news.image_link }}'height="250px" width="250px">
+            <img src='{{ news.image_link }}' class="img">
             {% endif %}
-          </div>
-          <div class="two">
-            <p>{{ news.body }}</p>
-          </div>
-        </div>       
+            </div>
+            <div>
+            {{ news.body }}
+           </div><br>
+        </div>     
+
     </div>
 </main>
             {% if user.is_staff %}

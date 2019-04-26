@@ -9,10 +9,14 @@
 	background-color:#ffffff;
 	color:#212529;
 	padding-top:20px;
-	padding-bottom:80px;
+	padding-bottom:20px;
 	border: 2px;
 	border-color: #dfe0e1;
 	border-style: solid;
+	min-height: 240px;
+}
+p{
+	margin-bottom: 0px;
 }
 
 .jumbotron:hover{
@@ -59,7 +63,7 @@
 			<p><img src="{{ news.image_link }}" class="rounded float-left" alt="news Image" align="left" height="200" width="200"></p>
 			<p><i> {{ news.date }} </i></p>
 			<h2><b>{{ news.title }}</b></h2>
-			<p>{{ news.body|truncatechars:80 }}</p>
+			<p>{{ news.body|truncatechars:400 }}</p>
 			
 			</div>
 			

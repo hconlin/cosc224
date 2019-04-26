@@ -33,6 +33,9 @@
 
   <br />
   <center><h1><b>{{ event.title }}</b></h1></center>
+    {%if event.description%}
+  <p><b>Event Details <br><hr></b> {{ event.description }} </p>
+  {%endif%}
   <hr class="my-4">
   <center>
   <div class="one">
@@ -45,9 +48,7 @@
   {%if event.end_date%}
   <p><b>End Date: <br><hr></b>{{ event.end_date }}</p>
   {%endif%}
-  {%if event.event_details%}
-  <p><b>Event Details <br><hr></b> {{ event.event_details }} </p>
-  {%endif%}
+
   {%if event.location%}
   <p><b>Location: <br><hr></b>{{ event.location }}</p>
   {%endif%}

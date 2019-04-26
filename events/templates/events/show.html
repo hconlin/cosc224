@@ -1,117 +1,169 @@
 {% include 'base.html' %}
- {% load static %}
+{% load static %}
 
-		{% block head %}
-                <link rel="stylesheet" type="text/css" href="{% static 'events/events.css' %}">
-		<title> {{ event.title }} </title>
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'events/events.css' %}">
+<title> {{ event.title }} </title>
 
-    <style>
-      .one{
-        width:20%;
-        float: left;
-        margin: 5%;
-      }
-      .two{
-        width: 20%;
-        margin: 5%;
-        float:left; 
-      }
-      .three{
-        width: 20%;
-        margin: 5%;
-        float:left; 
-      }
-    </style>
-		{% endblock %}
+<style>
+  .eventheader{
+    text-align:center;
+
+  }
+
+  .right{
+   height: 250px;
+ }
+
+ .eventfooter{
+  display: inline-block;
+ }
 
 
- <main role="main" class="container">
-                <div class="row">
-                    <div class="col-lg">
-{% block content %}
+
+.img{
+  height: 250px;
+  max-width: 325px;
+  float: left;
+  margin-right: 10px;
+}
+</style>
+{% endblock %}
 
 
-  <br />
-  <center><h1><b>{{ event.title }}</b></h1></center>
+<main role="main" class="container">
+  <div class="row">
+    <div class="col-lg">
+      {% block content %}
+
+
+      <br />
+
+      <div class="eventheader">
+        <center><h1><b>{{ event.title }}</b></h1></center>
+
+        {%if event.start_date%}
+        {{ event.start_date }}
+        {%endif%}
+
+        {% if event.start_time %}
+        {{ event.start_time }}
+        {% endif %}
+        {%if event.end_date != event.start_date %}
+      to {{ event.end_date }}</p>
+      {%endif%}
+      <hr>
+    </div>
+
+
+    <img src="{{ event.image_link }}" onerror="this.onerror=null;this.src='http://www.rangerwoodperiyar.com/images/joomlart/demo/default.jpg';" alt="Event Image" class="img">
+    
+    <div class="right">
+      <p><strong>WHEN:</strong>
+        {%if event.start_date%}
+        {{ event.start_date }}
+        {%endif%}
+
+        {% if event.start_time %}
+        {{ event.start_time }}
+        {% endif %}
+        {%if event.end_date != event.start_date %}
+      to {{ event.end_date }}</p>
+      {%endif%}
+      
+      {%if event.location%} 
+      <p> <strong>WHERE:</strong>      
+       {{ event.location }}
+       {%endif%}
+       {%if event.location_details%}
+       {{ event.location_details }}
+       {%endif%}
+     </p>
+
+     <p> <strong>COST:</strong>
+      {% if event.cost == 0 or event.cost is None %}
+      This is a free event!
+      {% else %}
+      ${{ event.cost }}
+      {% endif %}
+    </p>
+    {%if event.age_requirement%}
+    <p><strong>AGE REQUIREMENT: </strong>{{ event.age_requirement }}</p>
+    {%endif%}
+
+    {% if event.event_coordinator_name %}
+    <p><strong>CONTACT:</strong> 
+      {{ event.event_coordinator_name }}
+      {% endif %}
+      {% if event.event_coordinator_email %}
+      {{ event.event_coordinator_email }}
+      {%endif%}
+    </p>
+    {% if event.category %}
+    <strong>CATEGORY:</strong> {{ event.category }}</p>
+    {% endif %}
+
+
+  </div>
+
+  <div class= "description">
+    <hr>
     {%if event.description%}
-  <p><b>Event Details <br><hr></b> {{ event.description }} </p>
+  {{ event.description }} </p>
   {%endif%}
-  <hr class="my-4">
-  <center>
-  <div class="one">
-  {% if event.start_time%}
-  <p><b>Start Time: <br><hr></b>{{ event.start_time }}</p>
-  {% endif %}
-  {%if event.start_date%}
-  <p><b>Start Date: <br><hr></b>{{ event.start_date }}</p>
-  {%endif%}
-  {%if event.end_date%}
-  <p><b>End Date: <br><hr></b>{{ event.end_date }}</p>
-  {%endif%}
+</div>
+<hr><br>
+<div class="row">
+ <div class="col-sm-4" style="text-align: center">
+    {%if event.link%}
+    <p><b>Event Page: <br><hr></b> <a href="{{ event.link }}" target="_blank"> {{ event.link }}</a></p>
+    {%endif%}
 
-  {%if event.location%}
-  <p><b>Location: <br><hr></b>{{ event.location }}</p>
-  {%endif%}
+
   </div>
-  <div class="two">
-  {%if event.location_details%}
-  <p><b>Location Details: <br><hr></b>{{ event.location_details }}</p>
-  {%endif%}
-  {%if event.cost%}
-  <p><b>Cost: <br><hr></b> {{ event.cost }}</p>
-  {%endif%}
-  {%if event.age_requirement%}
-  <p><b>Age Requirement: <br><hr></b>{{ event.age_requirement }}</p>
-  {%endif%}
-  {%if event.link%}
-  <p><b>Event Page Link: <br><hr></b> <a href="{{ event.link }}" target="_blank"> {{ event.link }}</a></p>
-{%endif%}
-  {% if event.category %}
-  <p><b>Categories: <br><hr></b> {{ event.category }}</p>
-  {% endif %}
-  {% if event.event_coordinator_name %}
-  <p><b>Contact Name: <br><hr></b> {{ event.event_coordinator_name }}</p>
-  {% endif %}
-  {% if event.event_coordinator_email %}
-  <p><b>Contact Email: <br><hr></b> {{ event.event_coordinator_email }}</p>
-  {%endif%}
+  <div class="col-sm-4">
+   <br><div class="buttons">
+    <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}">
+      <button type="button" class="btn btn-primary btn-lg" aria-pressed="true">
+        Share on Facebook
+      </button>
+    </a>
   </div>
-<div class="three">
-  <p><img src="{{ event.image_link }}" onerror="this.onerror=null;this.src='http://www.rangerwoodperiyar.com/images/joomlart/demo/default.jpg';" alt="Event Image" height="250" width="250"></p>
-  <br />
+</div>
+<div class="col-sm-4">
+  <div class="buttons">
+<br>
+    <a href="https://twitter.com/home?status=Check%20this%20out!%20{{ request.build_absolute_uri }}">
+      <button type="button" class="btn btn-info btn-lg" aria-pressed="true">
+        Share on Twitter
+      </button>
+    </a>
+  </div>
+</div>
+
+
 </div>
 
 </center>
-		
-		<br />
-		<br />
-		<br />
+
+<br />
+<br />
+<br />
 
 
-  </div>
-                    
-                </div>
-            </main>
-            <div class="buttons">
-<a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}">
-<button type="button" class="btn btn-primary btn-lg" aria-pressed="true">
-Share on Facebook
-</button>
-</a>
-<a href="https://twitter.com/home?status=Check%20this%20out!%20{{ request.build_absolute_uri }}">
-<button type="button" class="btn btn-info btn-lg" aria-pressed="true">
-Share on Twitter
-</button>
-</a>
 </div>
-              {% if user.is_superuser or user.is_staff and event.user_id == user.id %}
-      <div class="buttons">
-        <div class="button-wrapper">
-          <a href="{% url 'edit_event' event.id %}">Edit Event</a>
-        </div>
-        <div class="button-wrapper">
-          <a href="{% url 'delete_event' event.id %}">Delete Event</a>
-        </div>
-            </div>
-  {% endif %}
+
+</div>
+</main>
+
+{% if user.is_superuser or user.is_staff and event.user_id == user.id %}
+<div class="buttons">
+  <div class="button-wrapper">
+    <a href="{% url 'edit_event' event.id %}">Edit Event</a>
+  </div>
+  <div class="button-wrapper">
+    <a href="{% url 'delete_event' event.id %}">Delete Event</a>
+  </div>
+</div>
+{% endif %}
 {% endblock %}

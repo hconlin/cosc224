@@ -1,12 +1,21 @@
 {% include 'base.html' %}
 
+ {% load static %}
+  <link rel="stylesheet" type="text/css" href="{% static 'members/preferences.css' %}">
+
+
 {% block content %}
-	<p> All links must be in http format </p>
+	 <div class="preference-form">
+	<div class="header">Edit News</div>
+	<br>
   <form action="" method="post">
     {% csrf_token %}
     <table>
     {{ form.as_p }}
     </table>
-    <input type="submit" value="Save Changes">
+   	 <p> <em>All links must be in http format</em> </p>
+    
+    <button class="form-button" type="submit">Update</button>
   </form>
+</div>
 {% endblock %}
